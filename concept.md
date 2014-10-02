@@ -1,10 +1,10 @@
-﻿=Basic Concept=
+﻿#Basic Concept
 I love social networks, but I hate the people who run them beacause invariably theu fuck them up. I want to host my own network for just me & my friends, free of any corporate bullshit.
 
-==Schema==
+##Schema
 There are only two types of objects: people & posts
-===Objects===
-====People====
+###Objects
+####People
 There are two kinds of people nodes: local and remote
 
 Local people hold all profile info for a person:
@@ -16,37 +16,37 @@ Also, a local person is identified by a local key or username:
 - localkey: delek.turner
 
 Remote people have only one field: remoteurl. This points to the exposed profile of the person on another clusterfriend server
-====Posts====
+####Posts
 Posts are the things people post. The content can be text, pictures, links, or all of the above. The fields are rudimentary:
 - Date
 - LinkedOnlyPrivacy: only people linked to this post can see it
-===Relationships===
+###Relationships
 Relationships define how people and posts are related.  
-====Poster====
+####Poster
 post-[poster]->person  
 The person who posted the post  
-====Mentioned====
+####Mentioned====
 post-[mentioned private:true|false]->person  
 The person is mentioned in the post and should get a notification. Also, a link to the person should be available in the post. 
 If private is true, the only the poster & the person mentioned can see the post.  
-====Invited====
+####Invited====
 post-[invited]->person  
 If the post is an event of some sort, a person can be invited to attend. They will get a notification.  
-====RSVP====
+####RSVP====
 person-[rsvp going:true|false]->post  
 A person who is invited to a post can rsvp  
-====Reply====
+####Reply====
 post-[reply private:true|false]->post  
 a post can be a reply to another post 
 if private is true, only the two posters can see the post  
-====Link====
+####Link====
 post-[link]->post  
 a post can be a link to another post (sharing).  
-====Friend====
+####Friend====
 person-[friend code:"string"]->person  
 a person is a friend of another person. to be someone's friend, an authorization code must be sent.  
 
-==API==
+##API==
 clusterfriend is a RESTful service.
 <host>/people  
 returns a list of people on the server that is a friend of this user
