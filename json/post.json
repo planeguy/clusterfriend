@@ -1,0 +1,26 @@
+﻿{
+	"date":"2014-10-12 16:07:00.0Z"
+	"md":"#some markdown",
+	"html":"<h1>some markdown</h1>",
+	"images":[
+		{"href":"images/img1.jpg"},
+		{"href":"images/img2.jpg"},
+		{"href":"images/img3.jpg"},
+	],
+	"link":{
+		"title":"Clickhole",
+		"href":"http://clickhole.com"
+	},
+	"relations":{
+		"reply":[
+			{"private": false, "href":"/people/dave/posts/5/"},
+			{"private": false, "href":"/people/rey/posts/23/"},
+			{"private": false, "href":"/people/karen/posts/65/"},
+			{"private": false, "href":"/people/rey/posts/25/"},
+			{"private": false, "href":"/people/dave/posts/6/}"
+		],
+		"link":[
+			{"private": false, "href":"/people/dave/posts/4/}"
+		]
+	}
+}
