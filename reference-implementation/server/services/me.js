@@ -1,19 +1,26 @@
-﻿define(["es6-promise"]
-    , function (es6p) {
-        var Promise = es6p.Promise;
+﻿if (typeof define !== 'function') {
+    var define = require('amdefine')(module);
+}
+define(["datastorage"]
+    , function (datastorage) {
         return function Me(user) {
             var me = this;
 
-            function get() {
+            this.get = function get() {
+                return datastorage.person.read(user);
             }
 
-            function update(details) {
+            this.update = function update(details) {
+                return datastorage.person.update(user, details);
+            }
 
+            this.create = function create(user, details) {
+                return datastorage.person.create(user, details);
             }
 
             this.friends = {
                 add: function addFriend(person) {
-
+                    return datastorage.relationships.create("friend", { start: { person: user }, end: { person: person } });
                 },
                 remove: function removeFriend(person) {
 

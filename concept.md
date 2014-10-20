@@ -58,3 +58,6 @@ person-[friend]->person
 a person is trying to be a friend of another person.  
 person <-[friend]-> person  
 a person is only a friend of a person if that person friends him back  
+#####Enemy
+person-[enemy]->person
+a person is an enemy of a person and has blocked all interaction with them
