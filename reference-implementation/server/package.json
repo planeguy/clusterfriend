@@ -1,0 +1,16 @@
+{
+  "name": "clusterfriend-server",
+  "version": "0.0.0",
+  "description": "clusterfriend server reference implementation",
+  "public": false,
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Delek Turner",
+  "license": "ISC",
+  "dependencies": {
+    "requirejs": "^2.1.15",
+    "restify": "^2.8.3"
+  }
+}

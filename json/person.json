@@ -1,7 +1,10 @@
 ﻿{
 	"user":"planeguy",
-	"first name":"Delek",
-	"last name":"Turner",
-	"profile":"Software Developer for the city of Victoria. Professional asshole.",
-	"img":"images/6.png"
+	"first":"Delek",
+	"last":"Turner",
+	"imageUrl":"images/6.png",
+	"profileMarkdown":"Software Developer for the city of Victoria. Professional asshole.",
+	"profileHtml":"<p>Software Developer for the city of Victoria. Professional asshole.</p>",
+	"@id":"people/planeguy",
+	"@type":"person"
 }

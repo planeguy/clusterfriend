@@ -1,0 +1,6 @@
+﻿<div>
+    <img class="poster-image" data-bind="attr:{src:imageUrl}, css:{'original-poster':isOriginalPoster}">
+    <!-- ko if: isOriginalPoster -->
+    <span class="poster-name original-poster" data-bind="text:user"></span>
+    <!-- /ko -->
+</div>
