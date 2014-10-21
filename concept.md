@@ -1,63 +1,76 @@
 ﻿#Basic Concept
 I love social networks, but I hate the people who run them beacause invariably they fuck them up trying to monetize them. I want to host my own network for just me & my friends, free of any corporate bullshit. More in the spirit of usenet, but with more not-text.
 
-##Technical Contraints
-###CORS
-The main technical constraint right now is how cross-site scripting protection affects remote friends. I would suppose in the "usenet" model, it would be server's responsibility to get and pass on data from the remote site, but that's quite an extra strain on the server. Remote friends aren't a priority right now so bleagh.
+So in a rant on the Rudram Thread, I said: 
+
+
+In that spirit I offer this alternative: the decentralized social network.
+
+##Um something?
+List of friends -> Query friend URL for updates -> Collate locally
 
 ##Schema
-There are only two types of objects: people & posts
 ###Objects
 ####People
-There are two kinds of people nodes: local and remote
-
-Local people hold all profile info for a person:
-- Name
-- User login
-- Bio
-- etc.  
-Also, a local person is identified by a local key or username:
-- localkey: delek.turner
-
-Remote people have only one field: remoteurl. This points to the exposed profile of the person on another clusterfriend server.
+- User Name: a user name unique to this domain
+- Url: the full url to this user (@self)
+- RSS: the url to this user's clusterfriend rss feed
+- Profile Image Url
+- Personal Info: could vary; possiple just a field of markdown, but could also be some sort of JSON object
 
 ####Posts
-Posts are the things people post. The content can be text, pictures, links, or all of the above. Required fields:  
-- date
-- md: the original post in markdown
-- html: the markdown post translated to html for quick retrieval and rendering
+- CF Url: the full cf url to this post
+- Date
+- Markdown: the original post in markdown
+- HTML: the markdown post translated to html for quick retrieval and rendering
+Note: there is no special thing for images. It is assumed whatever user front-end (web or app) the post is made with will upload items for url inclusion in the markdown.
 
 ###Relationships
-Relationships define how people and posts are related. All relationships my contain a field "private", but it not used for every kind of relationship.
+Relationships define how people and posts are related. Every object should have a set of relationships included with it.
 
 ####To Posts
-#####Going
-person-[going]->post  
-A person who is invited to something in a post can go (an rsvp)  
-#####Not Going
-person-[notgoing]->post  
-A person who is invited to something in a post can not go (an rsvp)  
 #####Reply
-post-[reply private:true|false]->post  
-a post can be a reply to another post 
-if private is true, only the two posters can see the post  
+post-[reply]->post  
+a post can be a reply to another post  
 #####Link
 post-[link]->post  
-a post can be a link to another post (sharing).  
+a post can be a link to another post (sharing)  
+#####Going
+person-[rsvpgoing]->post  
+A person who is invited to something in a post can go (assuming the post is an invitation of some sort)  
+#####Not Going
+person-[rsvpnotgoing]->post  
+A person who is invited to something in a post can not go (assuming the post is an invitation of some sort)  
 
 ####To People
 #####Poster
 post-[poster]->person  
 The person who posted the post  
 #####Tagged
-post-[tagged private:true|false]->person  
-The person is mentioned in the post and should get a notification. Also, a link to the person should be available in the post. 
-If private is true, the only the poster & the person mentioned can see the post.  
+post-[tagged]->person  
+The person is mentioned in the post and should get a notification (barring privacy). Also, a link to the person should be available in the post. 
 #####Friend
 person-[friend]->person  
 a person is trying to be a friend of another person.  
 person <-[friend]-> person  
 a person is only a friend of a person if that person friends him back  
 #####Enemy
-person-[enemy]->person
+person-[enemy]->person  
 a person is an enemy of a person and has blocked all interaction with them
+
+####Privacy
+A special relationship is used for privacy: For. Posts associated to these kind of relationships require the unique friend key to view.
+Privacy cascades down to children, so a public relationship to an object with a private relationship to something is private.
+
+ex:
+	post2 -[reply]-> post1 -[for private:true]-> A  
+	      -[poster]-> A    -[poster]-> B
+post2 is private to personA, even though it is not specifically private
+
+To figure this out, walk up the graph until you find [for private:true]->people. The people with the shortest path (and the poster of the object you are looking at) are the only ones with permission to the post.
+
+#####For
+post-[for private:true|false]->person  
+Like a person tag, but specifically for privacy. It is possible to have a public for; it will act the same as a tag.
+
+##Syndication and Dissemination
