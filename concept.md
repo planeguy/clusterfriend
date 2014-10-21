@@ -49,8 +49,8 @@ a post can be a link to another post (sharing).
 #####Poster
 post-[poster]->person  
 The person who posted the post  
-#####Mentioned
-post-[mentioned private:true|false]->person  
+#####Tagged
+post-[tagged private:true|false]->person  
 The person is mentioned in the post and should get a notification. Also, a link to the person should be available in the post. 
 If private is true, the only the poster & the person mentioned can see the post.  
 #####Friend

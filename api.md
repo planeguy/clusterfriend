@@ -1,6 +1,7 @@
 ﻿#API
 clusterfriend is a RESTful service with urls that do things.  
 unless otherwise noted, GET results and POST/PUT authorization are based on if the posters are friends (p <-[friend]-> p )  
+##people
 **<host>/people/:user**  
 returns the requested user  
 **<host>/people/:user/posts**  
@@ -12,6 +13,7 @@ a specific post
 **<host>/people/:user/posts/:postid/:relation**  
 will get all things that are :related to this one (i.e. where thing -[:relation]->:post)
 POSTing to this url will add a new post to your feed with that relation. equivalent of POST <host>/people/<current-logged-in-user>/posts where the post has a relation to :post indicated  
+##me
 **<host>/me**  
 user's profile  
 **<host>/me/friends**  

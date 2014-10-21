@@ -105,6 +105,16 @@ requirejs(["restify", "services/me", "services/people"]
                 next(err);
             });
         });
+        server.get("/people/:user/posts/:id/:relationship", function (req, res, next) {
+            var user = authenticatedUser(req.username);
+            (new People(user, req.params.user)).posts.related(parseInt(req.params.id), req.params.relationship)
+            .then(function (result) {
+                res.send(result);
+                next();
+            }).catch(function (err) {
+                next(err);
+            });
+        });
 
         server.listen(12345, function () {
             console.log("clusterfriend listening at %s", server.url);
