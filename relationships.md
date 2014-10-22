@@ -6,16 +6,8 @@ Relationships define how people and posts are related. Every object should have 
 post-[reply]->post  
 a post can be a reply to another post  
 ###Share
-post-[share]->post  
+post-[shared]->post  
 a post can be a link to another post  
-
-##Post-Person
-###Poster
-post-[poster]->person  
-The person who posted the post  
-###Tagged
-post-[tagged]->person  
-The person is mentioned in the post and should get a notification (barring privacy). Also, a link to the person should be available in the post. 
 
 ##Person-Person
 ###Friend
@@ -27,33 +19,26 @@ a person is only a friend of a person if that person friends him back
 person-[enemy]->person  
 a person is an enemy of a person and has blocked all interaction with them
 
-##Privacy
-Special relationships are used for privacy: For and NotFor. 
-###For
-post-[for]->person  
-Like a person tag, but specifically for privacy.
 
-Posts associated to this kind of relationships require the friend's public key to view.
-
-###Not For
-post-[notfor]->person
+##Post-Person
+###Tagged
+post-[tagged]->person  
+The person is mentioned in the post and should get a notification (barring privacy). Also, a link to the person should be available in the post. 
+###Ignored
+post-[ignored]->person
 Tags a post and its descendants as ignored by the person. This post should not be shown to a user.
 
 ##Relationship List
 1. friend
 2. enemy
-3. poster
-4. tag
-5. reply
-6. share
-7. for
-8. notfor
+3. reply
+4. shared
+5. tagged
+6. ignored
 ###plurals (for api)
 1. friends
 2. enemies
-3. poster
-4. tags
-5. replies
-6. shares
-7. for
-8. notfor
+3. replies
+4. shares
+5. tags
+6. ignores
