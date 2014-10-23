@@ -8,8 +8,9 @@ requirejs.config({
     nodeRequire: require
 });
 
-requirejs(["restify", "services/me", "services/people"]
-    , function (restify, Me, People) {
+requirejs(["restify", "server-config", "services/person", "services/posts"]
+    , function (restify, serverconfig, Person, Posts) {
+
         var server = restify.createServer();
         server.use(restify.bodyParser());
         server.use(restify.queryParser());
@@ -28,7 +29,7 @@ requirejs(["restify", "services/me", "services/people"]
 
         
 
-        server.listen(12345, function () {
-            console.log("clusterfriend listening at %s", server.url);
+        server.listen(serverconfig.port, function () {
+            console.log("%s listening at %s", serverconfig.clustername, serverconfig.url);
         });
     });

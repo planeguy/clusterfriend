@@ -4,9 +4,10 @@
 define([]
     , function () {
 
-        return function Person(user, email, image, personal) {
+        return function Person(user, email, url, image, personal) {
             var me = this;
             this.user = user;
+            this.url = url;
             this.email = email;
             this.image = image;
             this.personal = personal;

@@ -1,4 +1,7 @@
-﻿define([]
+﻿if (typeof define !== 'function') {
+	var define = require('amdefine')(module);
+}
+define([]
 	, function () {
 		return new (function MemoryStorage() {
 			var me = this;
