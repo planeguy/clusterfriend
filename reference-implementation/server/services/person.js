@@ -1,17 +1,16 @@
 ﻿define([]
     , function () {
-        return function Person() {
+        function Person() {
             var me = this;
 
             this.profile = {
-
                 get: function get(user, person) {
 
                 },
-                update: function update(person, profile) {
+                update: function update(user, profile) {
 
                 },
-                create: function create(person, profile) {
+                create: function create(user, profile) {
 
                 }
             };
@@ -21,5 +20,37 @@
 
                 }
             };
+
+            this.archive = {
+                get: function feed(user, person, page) {
+
+                }
+            };
+
+            this.friends = {
+                get: function (user, person) {
+
+                },
+                add: function (user, friend) {
+
+                },
+                remove: function (user, friend) {
+
+                }
+            }
+
+            this.enemies = {
+                get: function (user, person) {
+
+                },
+                add: function (user, friend) {
+
+                },
+                remove: function (user, friend) {
+
+                }
+            }
         };
+
+        return Person;
     });

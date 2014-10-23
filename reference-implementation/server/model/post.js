@@ -4,19 +4,13 @@
 define([]
     , function () {
 
-        return function Post(id, datetime, details) {
+        return function Post(poster, datetime, markdown, html) {
             var me = this;
-            this.id = id;
+
+            this.poster = poster;
             this.date = datetime;
-
-            this.setDetails = function setDetails(d) {
-                me.markdown = d.markdown;
-                me.html = d.html;
-                me.images = d.images;
-                me.link = d.link;
-            };
-
-            me.setDetails(details);
+            this.markdown = markdown;
+            this.html = html;
         };
 
     });

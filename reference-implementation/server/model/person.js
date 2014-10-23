@@ -4,19 +4,12 @@
 define([]
     , function () {
 
-        return function Person(user, details) {
+        return function Person(user, email, image, personal) {
             var me = this;
             this.user = user;
-
-            this.setDetails = function (d) {
-                me.email = d.email;
-                me.first = d.first;
-                me.last = d.last;
-                me.imageUrl = d.imageUrl;
-                me.profileMarkdown = d.profileMd;
-                me.profileHtml = d.profileHtml;
-            };
-            me.setDetails(details);
+            this.email = email;
+            this.image = image;
+            this.personal = personal;
         };
 
     });
