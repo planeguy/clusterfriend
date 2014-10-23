@@ -1,16 +1,9 @@
 ﻿var requirejs = require("requirejs");
 (require("es6-promise")).polyfill();
 
-requirejs.config({
-    paths: {
-        "datastorage": "storage/memory-storage"
-    },
-    nodeRequire: require
-});
-
+require("./require-config");
 requirejs(["restify", "server-config", "services/person", "services/posts"]
     , function (restify, serverconfig, Person, Posts) {
-
         var server = restify.createServer();
         server.use(restify.bodyParser());
         server.use(restify.queryParser());
