@@ -62,7 +62,8 @@ define([]
 			};
 
 			this.relationships = {
-				create: function (user, details) {
+			    create: function (relationship) {
+
 					if (!people[user]) {
 						people[user] = details;
 						return details;

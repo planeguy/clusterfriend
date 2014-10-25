@@ -1,9 +1,10 @@
 ﻿{
-	"url":"http://delek.org/cf/planeguy/posts/2",
-	"date":"2014-10-12 16:07:00.0Z",
-	"poster":"http://delek.org/cf/planeguy"
-	"markdown":"#some markdown",
-	"html":"<h1>some markdown</h1>",
-	"@id":"http://delek.org/cf/planeguy/posts/2",
-	"@type":"post"
+    "url": "http://delek.org/cf/planeguy/posts/2",
+    "date": "2014-10-12 16:07:00.0Z",
+    "poster": "http://delek.org/cf/planeguy",
+    "markdown": "#some markdown",
+    "html": "<h1>some markdown</h1>",
+    "for": "*",
+    "@id": "http://delek.org/cf/planeguy/posts/2",
+    "@type": "post"
 }
