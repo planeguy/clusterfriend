@@ -9,3 +9,6 @@ http://daringfireball.net/projects/markdown/syntax
 
 ##Restify
 http://mcavage.me/node-restify
+
+##cryptography
+http://www.echeque.com/Kong/MulRecip.htm

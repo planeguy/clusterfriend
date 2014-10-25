@@ -3,10 +3,11 @@
 	"url":"http://delek.org/cf/planeguy",
 	"email":"planeguy@delek.org",
 	"profileImage":"http://delek.org/cf/planeguy/content/av1.png",
-	"personal": {
-		markdown: "Software Developer for the city of Victoria. *Professional* asshole.",
-		html: "<p>Software Developer for the city of Victoria. <em>Professional</em> asshole.</p>"
-	},
+    "personal": {
+        "markdown": "Software Developer for the city of Victoria. *Professional* asshole.",
+        "html": "<p>Software Developer for the city of Victoria. <em>Professional</em> asshole.</p>"
+    },
+    "key": "<public key>",
 	"@id":"http://delek.org/cf/planeguy",
 	"@type":"person"
 }
