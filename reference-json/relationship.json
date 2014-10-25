@@ -1,8 +1,0 @@
-﻿{
-	"relationship":"reply",
-	"start":"http://delek.org/cf/pixelante/posts/5",
-	"end":"http://delek.org/cf/planeguy/posts/2",
-	"url":"http://delek.org/cf/relationships/100",
-	"@id":"http://delek.org/cf/relationships/100",
-	"@type":"relationship"
-}
