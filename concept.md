@@ -11,7 +11,7 @@ List of friends -> Query friend URL for updates -> Collate locally
 The basic idea is that everything is encrypted. For space and sanity's sake let's limit friend lists? Something nerdy like 128 to 256?
 posts can be:
 
-1. friends only
+1. all friends
 2. specific friends
 
 An update feed would be able to communicate new posts and their intended recipients (or "all friends"). 
@@ -69,7 +69,7 @@ returns
 }
 ```
 There's a lot of duplication if someone posts to everyone more than selected individuals. It could be possible that both formats could be supported:
-```HTTP
+```
 GET http://pg.delek.org/feed
 ```
 ```JSON
