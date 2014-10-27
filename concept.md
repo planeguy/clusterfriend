@@ -19,19 +19,19 @@ An update feed would be able to communicate new posts and their intended recipie
 OpenPGP enables a way to encrypt something for multiple recipients, but does not readily facilitate a post-by-post basis where the friends-only posts can be tied to the same symmetric key by default, while other posts use more PGP-like session keys. One way around this may be to encrypt each update feed with a session key for all friends and any "non-all-friends" posts would be encrypted again. The problem with this is the need to download all session keys for all friends before even being able to start decrypting it (and if you're unpopular, you may not even have any content). OpenPGP also implements ID authentication which may slow down/ is not completely necessary (maybe, i dunno).
 ###Custom A
 It may be a good to implement a simplified version of OpenPGP that allows for separtion of these resources. For example, the current feed would be encrypted with a single session key, then each user would have his session key available in a seperate file/server call...
-```HTTP
+```
 GET http://pg.delek.org/feed
 ```
 returns
 ```JSON
-{"@id":65,"@type":"feed",feed:"ENCRYPTED-FEED"}
+{"@id":65,"@type":"feed","feed":"ENCRYPTED-FEED"}
 ```
 then 
-```HTTP
+```
 GET http://pg.delek.org/sessions/65/pixelante
 ```
 returns
-```JSON
+```
 "ENCRYPED-SESSION-KEY-FOR-FEED-65-FOR-PIXELANTE"
 ```
 
@@ -39,8 +39,8 @@ If something in the feed is not meant for all friends, it is encrypted in a more
 ```JSON
 [
   {
-    url:"http://pg.delek.org/posts/123",
-    relationships:{
+    "url":"http://pg.delek.org/posts/123",
+    "relationships":{
       "in-reply-to":"http://z-star.cfhost.org/posts/98"
     }
   },
@@ -55,7 +55,7 @@ If something in the feed is not meant for all friends, it is encrypted in a more
 ```
 ###Custom B
 This is a similar idea as custom a, but takes it in the other direction. each friend gets a custom update feed and a session key. This method may actually be usable with OpenPGP as the feed is isolated from everyone else...
-```HTTP
+```
 GET http://pg.delek.org/feeds/pixelante
 ```
 returns
@@ -79,7 +79,9 @@ GET http://pg.delek.org/feed
   "format":"combined",
   "feed":"ENCRYPTED-FEED"
 }
+```
 OR
+```JSON
 {
   "@id":65,
   "@type":"feed",
