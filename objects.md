@@ -1,26 +1,20 @@
-﻿#OBJECTS
+#OBJECTS
+
 ##Person
 - user (name)
 - url: user's url
 - image: link to user's profile image
 - profile: url to json object that describes the person
 - key: a person's public key
+
+*suggested api endpoint*: http://host/friends/:username also http://host/ (my public profile to the world)
+
 ##Post
-- url: url of a single version of the post. some posts will be only a summary that links back to this
+- url
 - date
-- poster
-- post: 
- - content
- - relationships
-  - relationship name
-  - array of urls to things with this relationship
-- for: the most complex field. can be "public", "friends", or a **keys** object
-##Keys
-- <public key>: the field name is a friend's public key (indicating he has permission). the rest is data for getting the symmetric key for decrypting the main post
-##Updates
-- last updated: (is this required? part of http header)
-- expires: (is this required? part of http header)
-- updates
- - date
- - url
- - for
+- poster: probably a full person object
+- content
+- relationships
+ - in-reply-to
+ - tags
+ - shares
