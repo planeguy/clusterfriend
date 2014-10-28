@@ -1,0 +1,12 @@
+﻿{
+    "for":{
+        "http://chancedixon.com/cf":"ENCRYPTED-SESSION-KEY",
+        "http://google.com/drive/pixelante/cf/me.json":"ENCRYPTED-SESSION-KEY",
+		"http://delek.org/planeguy":"ENCRYPTED-SESSION-KEY"
+    },
+    "date": "",
+    "poster":"http://delek.org/planeguy",
+    "url":"http://delek.org/planeguy/posts/45",
+    "content":"ENCRYPTED-CONTENT",
+    "relationships":"ENCRYPTED-RELATIONSHIPS"
+}

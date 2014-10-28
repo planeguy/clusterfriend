@@ -1,8 +1,8 @@
 #OBJECTS
 
 ##Person
+- url: user's url, used as primary id
 - user (name)
-- url: user's url
 - image: link to user's profile image
 - profile: url to json object that describes the person
 - key: a person's public key
@@ -10,9 +10,10 @@
 *suggested api endpoint*: http://host/friends/:username also http://host/ (my public profile to the world)
 
 ##Post
-- url
+- for: recipients, poster & their session keys
 - date
 - poster
+- url: the permalink for this used as id
 - content
 - relationships
  - in-reply-to
