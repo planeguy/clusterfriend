@@ -1,8 +1,8 @@
-﻿{
+{
 	"user":"planeguy",
 	"image":"http://delek.org/cf/planeguy/content/av1.png",
-    "profile": "http://delek.org/cf/planeguy/profile",
-    "key": "<public key>",
+	"profile": "http://delek.org/cf/planeguy/profile",
+	"key": "<public key>",
 	"@id":"http://delek.org/cf/planeguy",
 	"@type":"person"
 }
