@@ -7,8 +7,8 @@
             "date": "",
             "url": "",
             "content":{
-                "markdown":"#test",
-                "html":"<h1>test</h1>"
+                "markdown":"#There's no real standard for this content",
+                "html":"<h1>There's no real standard for this content</h1>"
             },
             "relationships":{
                 "tags":["http://chancedixon.com/cf", "http://somethingawful.com/cf"]
@@ -19,19 +19,11 @@
             "for":{
                 "chanceula":"ENCRYPTED-SESSION-KEY",
                 "pixelante":"ENCRYPTED-SESSION-KEY"
-            }
+            },
             "date": "",
             "url":"",
             "content":"ENCRYPTED-CONTENT",
             "relationships":"ENCRYPTED-RELATIONSHIPS",
-            "poster":"http://delek.org/cf/planeguy"
-        },
-        {
-            "date": "",
-            "url": "http://its-possible-that-a-post-may-require-you-to-go-to-its-url-for-any-content",
-            "relationships":{
-                "in-reply-to":"http://someone-elses-post"
-            },
             "poster":"http://delek.org/cf/planeguy"
         }
     ]
