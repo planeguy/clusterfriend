@@ -1,6 +1,6 @@
 ﻿#POST RELATIONSHIPS
 ##Reply
-(post) -[replies-to]-> (post)
+(post) -[in-reply-to]-> (post)
 ##Tag
 (post) -[tags]-> (person)
 ##Share
