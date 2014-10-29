@@ -10,10 +10,11 @@
 *suggested api endpoint*: http://host/friends/:username also http://host/ (my public profile to the world)
 
 ##Post
-- for: recipients, poster & their session keys
+- for: recipients, poster & their session keys if applicable
 - date
 - poster
 - url: the permalink for this used as id
+- encrypted-url
 - content
 - relationships
  - in-reply-to
@@ -22,4 +23,9 @@
 - encrypted-content
 - encrypted-relationships
 
-I think it would good to have disconnected posts, or posts that are not automatically included in the feed. Then you could make a post sharing or including a direct link to the disconnected post. This lets you post about a gallery of multiple photos for example and it will not end up splatting xMB of photos to all your friends.
+##Feed
+- style: for possible second style. currently only "combined"
+- prev
+- next
+- feed: array of posts
+- encrypted-feed

@@ -39,17 +39,8 @@ returns
 "ENCRYPED-SESSION-KEY-FOR-FEED-65-FOR-PIXELANTE"
 ```
 
-If something in the feed is not meant for all friends, it is encrypted in a more traditional way of prefixing with the session keys for recipients.
+If something in the feed is not meant for all friends, it is encrypted again in a more traditional way of prefixing with the session keys for recipients.
 ```JSON
-[
-  {
-	"date":""
-    "url":"http://pg.delek.org/posts/123",
-	"content":"Post meant for all friends",
-    "relationships":{
-      "in-reply-to":"http://z-star.cfhost.org/posts/98"
-    }
-  },
   {
     "for":{
       "chanceula":"ENCRYPTED-SESSION-KEY",
@@ -60,5 +51,8 @@ If something in the feed is not meant for all friends, it is encrypted in a more
 	"content":"ENCYPTED-CONTENT",
 	"relationships":"ENCRYPTED-RELATIONSHIPS"
   }
-]
 ```
+
+##Not-encryption techinical
+###Polling for updates
+When polling for updates, the client app should send a either an If-None-Match or If-Modified-Since header. This way only actual updates are sent back to the client, the rest of servers throwing a 304. Conversely, the server needs to support these methods as well.
