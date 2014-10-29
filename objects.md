@@ -19,5 +19,7 @@
  - in-reply-to
  - tags
  - shares
+- encrypted-content
+- encrypted-relationships
 
 I think it would good to have disconnected posts, or posts that are not automatically included in the feed. Then you could make a post sharing or including a direct link to the disconnected post. This lets you post about a gallery of multiple photos for example and it will not end up splatting xMB of photos to all your friends.
