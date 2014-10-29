@@ -1,0 +1,14 @@
+﻿{
+    "for":{
+        "http://chancedixon.com/cf":"ENCRYPTED-SESSION-KEY",
+        "http://google.com/drive/pixelante/cf/me.json":"ENCRYPTED-SESSION-KEY",
+		"http://delek.org/planeguy":"ENCRYPTED-SESSION-KEY"
+    },
+    "date": "",
+    "poster":"http://delek.org/planeguy",
+    "url":"http://delek.org/planeguy/posts/45",
+	"encrypted-content":"hQEMA9+nMA7FGUdHAQgAmFkyQEtK3J0ld9JC59rNcG9Pfvi3CUar2dxBhZF7OHykw32VhDtIWUV4yqdu8PWvWgxjaZdj1YjkvoL88XzO2YFN3nJwsiL6bxF0JH1SXuiRL9e5qcWveqqUkmwmZWfCTz7iPsqInCfbOYi2z3M7vwowNgz5BbLf6tkYuovAX1IN3Fxp2SS2iFwx2qWHcLH7UyCVrplVMP0nDZLWStirpDo8Pvh88aBrhfRoDrzDi7LsZ0nuvzfJUFBwF7ZVYe466JodhUxVyu0DQyloE0820l7SF2ZOd3qeHllrlVGhL9Q6qAQRgKRRjq2YE92++AXkqbRCBuWUhwgSEbcQCsQ3vsnBHWQMnvXAv65KaEyi9Rs2JVJY/aAyhmzESa9SmC5uNQ+TIfzC1s7WbQfRyjFFmgR9bFvj7Jqz6XjjICNgCRp1uiTpjvWGwLxo+4Hik/8Q3SlrNUpV4IEUosjBudWoEYdXuFBCyAc88VRrAM5TdMdMVFbR4mURrQD4QXbHixlbC9G75RIoXgWbGGUvu5CiaWBDnxBEupE465KvkA0+Bk5m4Lnmv+eniAtdHMI/rGrQ3YyRY6GYj3s39LgNcVB0zG2eH82k+OH7dL7/0bExfbZlbL/I13oPz7iYWzrz4GQv/pCI1KwxbUWI2zCwQIgm6s+hDRby/rUhWX1a4qHfF/jloV1Ggmgght6+Swh3WPUacLF/pIchY83YlqM826FfBkXhS7XgVui0nzmDQpWlF0DoBMwtpO0abxbOr0x7wqAV//9reooIebjk0++moaT2WWmiI9cYTNUaPIKV46NnDtMqa9wrtxpuj2x4Lx4/OpnKBRahXcZohJGipzqUiA7tBY4VsccFuHqIuUnnnYGzMK5+HwuIHxHCqHcuyfkgbQ6B7gtgXtFUcJaPr0fydAMhRwBK1XpEjmSKoJA57S9euQay/ZsfESJXTh8kM08Oxw4k/OkgbCfKHTYXp4fnAiZ2+g===rCTM",
+	"encrypted-relationships":"hQEMA9+nMA7FGUdHAQf9HO4q0uy2gfSldPznUFXG+bc9pgmQQg3G8n90NO+yp5/2CJDK/h8cbp8ZQZZc//qHUnAS89BNX5g2GzJM07r31AmJ+F9Wqek0g7Zz31o4T39WIPHbdq5u6tChle6Kg0EB30tu2NiW94sFNZBlFvikKGaUq0Erv9SJeRV8H7BMAX7P5JcUlxiKAImO6SWQw4x1yawpV5XJhCd1DV8ztsr+keyOWwyNSs7OaNWIfzZJqml9O2rBw9VLfT6vWes/YHfUbyYeLozkltIz1eL+Uon3IKm10MIERTkQrJotCwkenJFbexmK6Xg22TTB7IBKlywRE0waKT+ygjys5pEEtb1FcsmzLboFUgzPWPeYCO1vzDJHqnYrVztNt1uFoQT0cNL6BsrQL/Pba1xreUV5ozca2inmpSuuyKxCBxlibpNFE8z6PwoOhNZ7yuE9mG4t7fBLtOajuXAU3g07lEhjCY1mCGHTtodDr2uiylKkCDDOIYiACrapkoC+XWFG6MBM4nmmqPsZ+0c3AoqD2yGqCze2mEqUmmrsCl5EIlUccRqtx9/f6HfpTcPiFIZjtC9coURhRhVUj98==oPk6",
+	"@id": "http://delek.org/planeguy/posts/45",
+	"@type":"post"
+}
