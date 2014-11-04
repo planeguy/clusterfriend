@@ -6,7 +6,8 @@
         "openpgp": "vendor/openpgp.min",
         "openpgp.worker": "vendor/openpgp.worker",
         "text": "vendor/text",
-        "jquery":"vendor/jquery-2.1.1.min"
+        "jquery": "vendor/jquery-2.1.1.min",
+        "es6-promise":"vendor/es6-promise-2.0.0.min"
     },
     shim: {
         "knockout.mapper": {

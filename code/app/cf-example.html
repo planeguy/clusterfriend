@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>CF EXAMPLE</title>
-    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
 </head>
 <body>
     <div class="panel">
@@ -13,31 +13,47 @@
             <div class="grid-item"> <span data-bind="text:comparison.difference.percentage"></span>%</div>
         </div>
     </div>
-    <div class="top-aligned  grid">
 
-        <section class="grid-item">
-            <div class="grid">
-                <button class="button grid-item" data-bind="click:encrypt">ENCRYPT</button>
+    <div class="grid">
+        <button class="grid-item button" data-bind="click:function(){tab('before');},css:{success:tab()=='before'}">BEFORE</button>
+        <button class="grid-item button" data-bind="click:function(){tab('after');},css:{success:tab()=='after'}">AFTER</button>
+    </div>
+
+    <section data-bind="visible:tab()=='before'">
+        <div class="grid">
+            <button class="button grid-item" data-bind="click:encrypt">ENCRYPT</button>
+        </div>
+        <section data-bind="foreach:posts">
+            <small data-bind="text:date"></small>
+            <strong data-bind="text:poster"></strong>
+            <div data-bind="with:post">
+                <a data-bind="text:summary,attr:{href:url}"></a>
+                <div class="grid" data-bind="with:relates">
+                    <a class="grid-item" data-bind="attr:{href:'replies-to'}"><small>replies to</small></a>
+                    <div class="grid-item" data-bind="foreach:tags">
+                        <small><a data-bind="attr:{href:$data}, text:$data"></a></small>
+                    </div>
+                    <small><a class="grid-item" data-bind="attr:{href:shares}">shares <span data-bind="text:shares"></span></a></small>
+                </div>
             </div>
-            <section data-bind="foreach:posts">
-                <h3 data-bind="text:date"></h3>
-                <pre data-bind="text:$data"></pre>
-            </section>
-
-            <!--<section data-bind="foreach:posts">
-                <h3 data-bind="text:datetime"></h3>
-                <p class="panel" data-bind="text:content"></p>
-            </section>-->
-            <section>
-                <div class="alert panel" data-bind="visible:generating">GENERATING</div>
-                <textarea data-bind="text:JSON.stringify(friends())" rows="40"></textarea>
-            </section>
         </section>
 
-        <section class="grid-item">
-            <!-- output -->
+        <section>
+            <strong>Friends</strong>
+            <div class="alert panel" data-bind="visible:generating">GENERATING</div>
+            <div class="grid">
+                <textarea class="grid-item" data-bind="text:JSON.stringify(friends())" rows="10"></textarea>
+            </div>
+        </section>
+    </section>
+
+    <section data-bind="visible:tab()=='after'" class="grid">
+        <!-- output -->
+        <div class="grid-item">
             <div class="primary panel" data-bind="visible:encrypting">ENCRYPTING...</div>
-            <textarea data-bind="text:feed" rows="5"></textarea>
+            <div class="grid">
+                <textarea class="grid-item" data-bind="text:feed" rows="5"></textarea>
+            </div>
             <small>length: <span data-bind="text:feed().length"></span></small>
             <div data-bind="foreach:friends">
                 <div class="grid">
@@ -47,9 +63,18 @@
                     <div class="one-sixth grid-item"><button class="tiny button" data-bind="click:$parent.decrypt">Decrypt</button></div>
                 </div>
             </div>
-            <textarea data-bind="text:received" rows="25"></textarea>
-        </section>
-    </div>
+
+        </div>
+        <div class="grid-item">
+            <div style="position:fixed;bottom:0;width:50%;">
+                <strong>Decrypted</strong>
+                <div class="grid">
+                    <textarea class="grid-item" data-bind="text:received" rows="10"></textarea>
+                </div>
+            </div>
+
+        </div>
+    </section>
     <script data-main="main" src="js/vendor/require.js"></script>
 </body>
 </html>

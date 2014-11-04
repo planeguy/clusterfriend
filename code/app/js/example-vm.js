@@ -1,26 +1,16 @@
-﻿define(["jquery", "knockout", "openpgp", "text!./feeds/single-post.txt" ],
-    function ($, ko, openpgp, singlepost) {
+﻿define(["jquery", "knockout", "openpgp", "text!./feeds/single-post.txt", "friends/generate" ],
+    function ($, ko, openpgp, singlepost, generateFriends) {
         return function exampleVM(options) {
-            var friends = ko.observableArray([]).extend({ rateLimit: { timeout: 500, method: "notifyWhenChangesStop" } });
 
-            function generateFriends(number) {
-                openpgp.initWorker("js/vendor/openpgp.worker.min.js");
-                for (var i = 0; i < number; i++) {
-                    openpgp.generateKeyPair({ numBits: 512, userId: "friend" + i, passphrase: "friend" + i })
-                    .then((function (i) {
-                        return function (key) {
-                            friends.push({
-                                user: "friend" + i,
-                                key: key
-                            });
-                        }
-                    })(i));
-                }
-            }
+            var friends = ko.observableArray([]).extend({ rateLimit: { timeout: 500, method: "notifyWhenChangesStop" } });
+            var currentTab = ko.observable("before");
+
             if (options && options.generate) {
-                generateFriends(options.generate);
-            }
-            else if (options && options.loadFriends) {
+                generateFriends(options.generate)
+                .then(function (newfriends) {
+                    friends(newfriends);
+                });
+            } else if (options && options.loadFriends) {
                 $.get("js/friends/" + options.loadFriends + ".txt")
                 .then(function (f) {
                     friends(JSON.parse(f));
@@ -28,6 +18,7 @@
                     alert(JSON.stringify(err));
                 });
             }
+
             var generating = ko.computed(function () {
                 if (options && options.generate) return friends().length < options.generate;
                 return false;
@@ -44,6 +35,7 @@
             var posts = ko.observableArray([]);
             var currentPost = ko.observable("");
             function encryptFeed() {
+                currentTab("after");
                 encrypting(true);
                 openpgp.initWorker("js/vendor/openpgp.worker.min.js");
                 openpgp.encryptMessage(
@@ -58,13 +50,13 @@
                         encrypting(false);
                     });
             }
+
             function post(content) {
                 posts().push({
                     datetime: new Date(),
                     content: content || currentPost()
                 });
             }
-
             if (options && options.generateFeed) {
                 var parsedpost = JSON.parse(singlepost);
                 var newposts = [];
@@ -94,6 +86,7 @@
             }
 
             return {
+                tab:currentTab,
                 friends: friends,
                 current: currentPost,
                 posts: posts,
