@@ -20,6 +20,7 @@
   - tags
   - shares
  - content
+ - no-content: true | false. the post may be so small to fit in the summary in which case there is no download from the permalink required
 
 ##Feed
 - feed: array of posts
