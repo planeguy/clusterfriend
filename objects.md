@@ -21,6 +21,7 @@
   - shares
  - content
  - no-content: true | false. the post may be so small to fit in the summary in which case there is no download from the permalink required
+ - private: if this is for specific users (i.e. there is a "for" property on the post) an OpenPGP encrypted post would be here. It would contain a post object.
 
 ##Feed
 - feed: array of posts

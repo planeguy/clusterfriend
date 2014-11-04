@@ -55,8 +55,8 @@ tags: [chanceula]
 Relationships also allow client programs to create context...
 ```
 [planeguy] replied to [pixelante]'s post
-pixelante: "still wanna see that movie with benedict cumberbatch. who's in? saturday?"
+pixelante (original post): "still wanna see that movie with benedict cumberbatch. who's in? saturday?"
 planeguy: "[chanceula] said she's working saturday for an accessioning party. how does sunday sound?"
 tags: [chanceula]
 ```
-A good client would be able to cache content that was used or seen recently and use it to add conext without making another network call.
+A good client would be able to cache content that was used or seen recently and use it to add conext without making another network call. This also applies to users/friends/profiles, so an app can retrieve the proper user name without loading from the network.
