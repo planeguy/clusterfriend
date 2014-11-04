@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>CF EXAMPLE</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+</head>
+<body>
+    <div class="panel">
+        <p>Original size: <span data-bind="text:comparison.originalsize"></span></p>
+        <p>Encrypted size: <span data-bind="text:comparison.encryptedsize"></span></p>
+        <div class="grid">
+            <div class="grid-item" data-bind="text:comparison.difference.raw"></div>
+            <div class="grid-item"> <span data-bind="text:comparison.difference.percentage"></span>%</div>
+        </div>
+    </div>
+    <div class="top-aligned  grid">
+
+        <section class="grid-item">
+            <!-- input -->
+            <div>
+                <small>Post Content</small>
+            </div>
+            <div>
+                <textarea data-bind="value:current"></textarea>
+            </div>
+            <div class="grid">
+                <button class="button grid-item" data-bind="click:post">POST</button>
+                <button class="button grid-item" data-bind="click:encrypt">ENCRYPT</button>
+            </div>
+            <section data-bind="foreach:posts">
+                <h3 data-bind="text:date"></h3>
+                <pre data-bind="text:$data"></pre>
+            </section>
+
+            <!--<section data-bind="foreach:posts">
+                <h3 data-bind="text:datetime"></h3>
+                <p class="panel" data-bind="text:content"></p>
+            </section>-->
+            <section>
+                <div class="alert panel" data-bind="visible:generating">GENERATING</div>
+                <textarea data-bind="text:JSON.stringify(friends())" rows="40"></textarea>
+            </section>
+        </section>
+
+        <section class="grid-item">
+            <!-- output -->
+            <div class="primary panel" data-bind="visible:encrypting">ENCRYPTING...</div>
+            <textarea data-bind="text:feed" rows="5"></textarea>
+            <small>length: <span data-bind="text:feed().length"></span></small>
+            <div data-bind="foreach:friends">
+                <div class="grid">
+                    <div class="grid-item">
+                        Decrypt for <span data-bind="text:user"></span>
+                    </div>
+                    <div class="one-sixth grid-item"><button class="tiny button" data-bind="click:$parent.decrypt">Decrypt</button></div>
+                </div>
+            </div>
+            <textarea data-bind="text:received" rows="25"></textarea>
+        </section>
+    </div>
+    <script data-main="main" src="js/vendor/require.js"></script>
+</body>
+</html>
