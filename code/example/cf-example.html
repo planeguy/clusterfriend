@@ -5,14 +5,6 @@
     <link rel="stylesheet" type="text/css" href="css/main.css" />
 </head>
 <body>
-    <div class="panel">
-        <p>Original size: <span data-bind="text:comparison.originalsize"></span></p>
-        <p>Encrypted size: <span data-bind="text:comparison.encryptedsize"></span></p>
-        <div class="grid">
-            <div class="grid-item" data-bind="text:comparison.difference.raw"></div>
-            <div class="grid-item"> <span data-bind="text:comparison.difference.percentage"></span>%</div>
-        </div>
-    </div>
 
     <div class="grid">
         <button class="grid-item button" data-bind="click:function(){tab('before');},css:{success:tab()=='before'}">BEFORE</button>
@@ -50,26 +42,34 @@
     <section data-bind="visible:tab()=='after'" class="grid">
         <!-- output -->
         <div class="grid-item">
-            <div class="primary panel" data-bind="visible:encrypting">ENCRYPTING...</div>
-            <div class="grid">
-                <textarea class="grid-item" data-bind="text:feed" rows="5"></textarea>
+            <div style="position:fixed;bottom:0;width:50%;">
+                <div class="primary panel" data-bind="visible:encrypting">ENCRYPTING...</div>
+                <div class="grid">
+                    <textarea class="grid-item" data-bind="text:feed" rows="5"></textarea>
+                </div>
+                <small>length: <span data-bind="text:feed().length"></span></small>
+                <div class="panel">
+                    <p>Original size: <span data-bind="text:comparison.originalsize"></span></p>
+                    <p>Encrypted size: <span data-bind="text:comparison.encryptedsize"></span></p>
+                    <div class="grid">
+                        <div class="grid-item" data-bind="text:comparison.difference.raw"></div>
+                        <div class="grid-item"> <span data-bind="text:comparison.difference.percentage"></span>%</div>
+                    </div>
+                </div>
+                <strong>Decrypted</strong>
+                <div class="grid">
+                    <textarea class="grid-item" data-bind="text:received" rows="10"></textarea>
+                </div>
             </div>
-            <small>length: <span data-bind="text:feed().length"></span></small>
+        </div>
+        <div class="grid-item">
+            
             <div data-bind="foreach:friends">
                 <div class="grid">
                     <div class="grid-item">
                         Decrypt for <span data-bind="text:user"></span>
                     </div>
                     <div class="one-sixth grid-item"><button class="tiny button" data-bind="click:$parent.decrypt">Decrypt</button></div>
-                </div>
-            </div>
-
-        </div>
-        <div class="grid-item">
-            <div style="position:fixed;bottom:0;width:50%;">
-                <strong>Decrypted</strong>
-                <div class="grid">
-                    <textarea class="grid-item" data-bind="text:received" rows="10"></textarea>
                 </div>
             </div>
 
