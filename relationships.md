@@ -1,42 +1,36 @@
 ﻿#POST RELATIONSHIPS
 ##in general
 ###Reply
-(post) -[replies-to]-> {post: (post), by:(person)}
+(post) -[replies-to]-> (post)
 ###Tag
 (post) -[tags]-> (person)
 ###Share
-(post) -[shares]-> {post: (post), by:(person)}
+(post) -[shares]-> (post)
 
 ##Relationships as...
 ###JSON
 ```JSON
 {
-	"replies-to":{
-		"post":"http://google.com/drive/pixelante/cf/post0006.json",
-		"by":"http://google.com/drive/pixelante/cf/me.json"
-	},
+	"replies-to":"http://google.com/drive/pixelante/cf/post0006.json",
     "tags":[
 		"http://chancedixon.com/cf",
 		"http://somethingawful.com/cf/lowtax"
 	],
-	"shares":{
-		"post":"http://somethingawful.com/cf/lowtax/posts/54",
-		"by":"http://somethingawful.com/cf/lowtax"
-	}
+	"shares":"http://somethingawful.com/cf/lowtax/posts/54",
 }
 ```
 ###XML
 ```XML
 <relationships>
 	<replies-to>
-		<post src="http://google.com/drive/pixelante/cf/post0006.json" by="http://google.com/drive/pixelante/cf/me.json" />
+		<post src="http://google.com/drive/pixelante/cf/post0006.json"/>
 	</replies-to>
 	<tags>
 		<person src="http://chancedixon.com/cf" />
 		<person src="http://somethingawful.com/cf/lowtax" />
 	</tags>
 	<shares>
-		<post src="http://somethingawful.com/cf/lowtax/posts/54" by="http://somethingawful.com/cf/lowtax" />
+		<post src="http://somethingawful.com/cf/lowtax/posts/54"/>
 	</shares>
 </relationships>
 ```

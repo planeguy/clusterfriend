@@ -1,21 +1,16 @@
-﻿{
-	"date":"03-11-2015T14:00:00.0Z",
-	"user":"http://cf.delek.org/planeguy",
-	"post":{
-		"url":"http://cf.delek.org/planeguy/posts/1",
+﻿ {
+    "date": "2013-10-21T13:28:06.419Z",
+    "poster":"http://delek.org/planeguy",
+	"post:" {
+		"url": "http://delek.org/planeguy/posts/45",
 		"relates":{
-			"replies-to":{
-				"post":"http://google.com/drive/pixelante/cf/post0006.json",
-				"by":"http://google.com/drive/pixelante/cf/me.json"
-			},
-			"tags":[
-				"http://cf.delek.org/chanceula"
-			],
-			"shares":{
-				"post":"http://google.com/drive/pixelante/cf/post0006.json",
-				"by":"http://google.com/drive/pixelante/cf/me.json"
-			}"
+			"replies-to":"http://google.com/drive/pixelante/cf/post0006.json",
+			"tags":["http://chancedixon.com/cf", "http://somethingawful.com/cf/lowtax"],
+			"shares":"http://somethingawful.com/cf/lowtax/posts/54"
 		},
-		"content":"STUFF"
+		"content":{
+			"markdown":"#There's no real standard for this content",
+			"html":"<h1>There's no real standard for this content</h1>"
+		}
 	}
 }
