@@ -1,9 +1,8 @@
 {
-	"url":http://delek.org/planeguy,
-	"user":"planeguy",
-	"image":"http://delek.org/planeguy/content/av1.png",
+	"user":"http://delek.org/planeguy",
+	"name":"planeguy",
+	"feed":"http://delek.org/planeguy/feed",
+	"image":"http://delek.org/planeguy/av1.png",
 	"profile": "http://delek.org/planeguy/profile",
-	"key": "<public key>",
-	"@id":"http://delek.org/planeguy",
-	"@type":"person"
+	"key": "<public key>"
 }
