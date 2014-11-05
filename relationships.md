@@ -7,8 +7,7 @@
 ###Share
 (post) -[shares]-> (post)
 
-##Relationships as...
-###JSON
+##Relates object (see [objects][/objects.md])
 ```JSON
 {
 	"replies-to":"http://google.com/drive/pixelante/cf/post0006.json",
@@ -19,21 +18,7 @@
 	"shares":"http://somethingawful.com/cf/lowtax/posts/54",
 }
 ```
-###XML
-```XML
-<relationships>
-	<replies-to>
-		<post src="http://google.com/drive/pixelante/cf/post0006.json"/>
-	</replies-to>
-	<tags>
-		<person src="http://chancedixon.com/cf" />
-		<person src="http://somethingawful.com/cf/lowtax" />
-	</tags>
-	<shares>
-		<post src="http://somethingawful.com/cf/lowtax/posts/54"/>
-	</shares>
-</relationships>
-```
+
 ##Suggested Uses
 The relationships allow the disconnected posts to act more like a social network. You can display the relationships before loading the main content.
 
