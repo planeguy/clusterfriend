@@ -7,7 +7,7 @@
 ###Share
 (post) -[shares]-> (post)
 
-##Relates object (see [objects][/objects.md])
+##Relates object (see [objects](/objects.md))
 ```JSON
 {
 	"replies-to":"http://google.com/drive/pixelante/cf/post0006.json",
