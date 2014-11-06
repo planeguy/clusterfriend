@@ -1,9 +1,9 @@
 #Basic Concept
 I love social networks, but I hate the people who run them beacause invariably they fuck them up trying to monetize them. I want to host my own network for just me & my friends, free of any corporate bullshit. More in the spirit of usenet, but with more not-text.
 
-So in a rant on the Rudram Thread, I said: 
+So in a rant on the [Rudram Thread](https://www.facebook.com/chris.rudram/posts/10153870108165247), I said: 
 
-"fuck bookface. we should all go back to blogging with rss feeds in a distributed fashion. I mean seriously, we developed a decentralized, robust network of connected servers AND a really simple syndication format for dissemination of information, only to end up putting all our shit on some corporations server cluster with the faint hope they won't curate my photos of dinner out of your feed."
+>"fuck bookface. we should all go back to blogging with rss feeds in a distributed fashion. I mean seriously, we developed a decentralized, robust network of connected servers AND a really simple syndication format for dissemination of information, only to end up putting all our shit on some corporations server cluster with the faint hope they won't curate my photos of dinner out of your feed."
 
 Easier said than done, but in that spirit started this project: a decentralized social network. I'm sure someone has thought of this before, but I've yet to find it.
 
@@ -51,7 +51,7 @@ The feed is OpenPGP encrypted and would decypts to something like
 If something in the feed is not meant for all friends, it is encrypted before adding it to the feed, so you get:
 ```JSON
 	{
-		"for":["chanceula", "pixelante"]
+		"for":["chanceula", "pixelante"],
 		"date":"03-11-2015T14:00:00.0Z",
 		"user":"http://cf.delek.org/planeguy",
 		"post":{

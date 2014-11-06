@@ -11,6 +11,7 @@
 		"content":{
 			"markdown":"#There's no real standard for this content",
 			"html":"<h1>There's no real standard for this content</h1>"
-		}
+		},
+		"more":false
 	}
 }

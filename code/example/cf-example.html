@@ -18,7 +18,7 @@
         <section data-bind="foreach:posts">
             <small data-bind="text:date"></small>
             <strong data-bind="text:poster"></strong>
-            <div data-bind="with:post">
+            <div data-bind="with:public">
                 <a data-bind="text:summary,attr:{href:url}"></a>
                 <div class="grid" data-bind="with:relates">
                     <a class="grid-item" data-bind="attr:{href:'replies-to'}"><small>replies to</small></a>

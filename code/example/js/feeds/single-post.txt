@@ -1,7 +1,7 @@
 ﻿ {
     "date": "2013-10-21T13:28:06.419Z",
     "poster":"http://delek.org/planeguy",
-	"post": {
+	"public": {
 		"url": "http://delek.org/planeguy/posts/45",
 		"summary":"[planeguy] replied to [pixelante]'s post",
 		"relates":{
@@ -9,6 +9,6 @@
 			"tags":["http://chancedixon.com/cf", "http://somethingawful.com/cf/lowtax"],
 			"shares":"http://somethingawful.com/cf/lowtax/posts/54"
 		},
-		"no-content":true
+		"more":false
 	}
 }
