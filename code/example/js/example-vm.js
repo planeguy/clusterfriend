@@ -40,7 +40,7 @@
                 openpgp.initWorker("js/vendor/openpgp.worker.min.js");
                 openpgp.encryptMessage(
                         keys(),
-                        JSON.stringify(posts())
+                        ko.toJSON(posts())
                     ).then(function (result) {
                         feed(result);
                         currentPost("");
