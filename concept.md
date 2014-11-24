@@ -23,7 +23,10 @@ An update feed would be able to communicate new posts and their intended recipie
 
 Public feeds are seperate as they are not encrypted in any way. If they follow the standard, then they should still be readable by clusterfriend clients.
 ###A little more techincal
-After some experimentation, I think it would be totally feasible to just use OpenPGP (minus keyrings & trusted verifiers) to encrypt a public feed resource, and additionally any private posts within. 
+I think it would be totally feasible to just use OpenPGP (minus keyrings & trusted verifiers) to encrypt a public feed resource, and additionally any private posts within. 
+###The Bad News
+After some experimentaion, you can see that the data downloads are rather large. Either the "just an rss file" is not totaly feasible and a smarter service is required or more research is needed
+
 ```
 GET http://cf.delek.org/
 ```
@@ -38,11 +41,11 @@ The feed is OpenPGP encrypted and would decypts to something like
 	{
 		"date":"03-11-2015T14:00:00.0Z",
 		"user":"http://cf.delek.org/planeguy",
-		"post":{
+		"public":{
 			"url":"http://cf.delek.org/planeguy/posts/1",
-			"relates":{
+			"relates":[{
 				"replies-to":"http://cf.delek.org/chanceula/posts/1"
-			}
+			}]
 		}
 	},
 ...
@@ -51,12 +54,9 @@ The feed is OpenPGP encrypted and would decypts to something like
 If something in the feed is not meant for all friends, it is encrypted before adding it to the feed, so you get:
 ```JSON
 	{
-		"for":["chanceula", "pixelante"],
 		"date":"03-11-2015T14:00:00.0Z",
 		"user":"http://cf.delek.org/planeguy",
-		"post":{
-			"private":"ENCRYPTED-POST-WITH-ONLY-SESSION-KEYS-FOR-CHANCEULA-AND-PIXELANTE"
-			}
+		"private":"ENCRYPTED-POST-WITH-ONLY-SESSION-KEYS-FOR-CHANCEULA-AND-PIXELANTE"
 		}
 	}
 ```
