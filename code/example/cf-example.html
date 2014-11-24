@@ -1,9 +1,11 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <title>CF EXAMPLE</title>
     <link rel="stylesheet" type="text/css" href="css/main.css" />
 </head>
+
 <body>
 
     <div class="grid">
@@ -19,13 +21,11 @@
             <small data-bind="text:date"></small>
             <strong data-bind="text:poster"></strong>
             <div data-bind="with:public">
-                <a data-bind="text:summary,attr:{href:url}"></a>
-                <div class="grid" data-bind="with:relates">
-                    <a class="grid-item" data-bind="attr:{href:'replies-to'}"><small>replies to</small></a>
-                    <div class="grid-item" data-bind="foreach:tags">
-                        <small><a data-bind="attr:{href:$data}, text:$data"></a></small>
-                    </div>
-                    <small><a class="grid-item" data-bind="attr:{href:shares}">shares <span data-bind="text:shares"></span></a></small>
+                <div class="grid" data-bind="foreach:relates">
+                    <span class="grid-item" data-bind="text:$data"></span>
+                </div>
+                <div>
+                    <span class="grid-item" data-bind="text:content"></span>
                 </div>
             </div>
         </section>
@@ -49,8 +49,10 @@
                 </div>
                 <small>length: <span data-bind="text:feed().length"></span></small>
                 <div class="panel">
-                    <p>Original size: <span data-bind="text:comparison.originalsize"></span></p>
-                    <p>Encrypted size: <span data-bind="text:comparison.encryptedsize"></span></p>
+                    <p>Original size: <span data-bind="text:comparison.originalsize"></span>
+                    </p>
+                    <p>Encrypted size: <span data-bind="text:comparison.encryptedsize"></span>
+                    </p>
                     <div class="grid">
                         <div class="grid-item" data-bind="text:comparison.difference.raw"></div>
                         <div class="grid-item"> <span data-bind="text:comparison.difference.percentage"></span>%</div>
@@ -63,13 +65,15 @@
             </div>
         </div>
         <div class="grid-item">
-            
+
             <div data-bind="foreach:friends">
                 <div class="grid">
                     <div class="grid-item">
                         Decrypt for <span data-bind="text:user"></span>
                     </div>
-                    <div class="one-sixth grid-item"><button class="tiny button" data-bind="click:$parent.decrypt">Decrypt</button></div>
+                    <div class="one-sixth grid-item">
+                        <button class="tiny button" data-bind="click:$parent.decrypt">Decrypt</button>
+                    </div>
                 </div>
             </div>
 
@@ -77,4 +81,5 @@
     </section>
     <script data-main="main" src="js/vendor/require.js"></script>
 </body>
+
 </html>

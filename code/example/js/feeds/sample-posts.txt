@@ -1,0 +1,52 @@
+[{
+        "date": "2013-10-21T13:28:06.419Z",
+        "poster": "http://delek.org/planeguy",
+        "public": {
+            "url": "http://delek.org/planeguy/posts/45",
+            "relates": [
+                {
+                    "tags": "http://chancedixon.com/cf"
+                },
+                {
+                    "tags": "http://somethingawful.com/cf/lowtax"
+                },
+                {
+                    "shares": "http://somethingawful.com/cf/lowtax/posts/54"
+                }
+            ]
+        }
+},
+    {
+        "date": "2013-10-21T13:28:06.419Z",
+        "poster": "http://delek.org/planeguy",
+        "public": {
+            "url": "http://delek.org/planeguy/posts/44",
+            "relates": [
+                {
+                    "likes": "http://google.com/drive/pixelante/cf/post0006.json"
+                }
+            ]
+        }
+},
+    {
+        "date": "2013-10-21T13:28:06.419Z",
+        "poster": "http://delek.org/planeguy",
+        "public": {
+            "url": "http://delek.org/planeguy/posts/43",
+            "content": "fuck bookface. we should all go back to blogging with rss feeds in a distributed fashion. I mean seriously, we developed a decentralized, robust network of connected servers AND a really simple syndication format for dissemination of information, only to end up putting all our shit on some corporations server cluster with the faint hope they won't curate my photos of dinner out of your feed."
+        }
+},
+    {
+        "date": "2013-10-21T13: 28: 06.419Z ",
+        "poster": "http: //delek.org/planeguy",
+        "public": {
+            "url": "http://delek.org/planeguy/posts/42",
+            "relates": [
+                {
+                    "replies-to": "http://google.com/drive/pixelante/cf/post0006.json"
+                    }
+        ],
+            "content": "fuck bookface. we should all go back to blogging with rss feeds in a distributed fashion. I mean seriously, we developed a decentralized, robust network of connected servers AND a really simple syndication format for dissemination of information, only to end up putting all our shit on some corporations server cluster with the faint hope they won't curate my photos of dinner out of your feed."
+        }
+}
+]

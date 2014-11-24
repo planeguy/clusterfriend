@@ -1,4 +1,4 @@
-﻿requirejs(["require-config"], function () {
+requirejs(["require-config"], function () {
     requirejs(["knockout", "example-vm"],
         function (ko, vm) {
             ko.applyBindings(vm({
