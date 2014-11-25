@@ -22,11 +22,14 @@ posts can be:
 An update feed would be able to communicate new posts and their intended recipients (or "all friends"). 
 
 Public feeds are seperate as they are not encrypted in any way. If they follow the standard, then they should still be readable by clusterfriend clients.
+
+##The Bad News
+After some experimentaion, you can see in (./sizes/quick-maths.md) that the data downloads are rather large. Either the "just an rss file" is not totaly feasible and a smarter service is required or more research is needed.
+###Possible Solutions
+- Smaller batch size: less to download at once, but prolific users will still pump out 
+
 ###A little more techincal
 I think it would be totally feasible to just use OpenPGP (minus keyrings & trusted verifiers) to encrypt a public feed resource, and additionally any private posts within. 
-###The Bad News
-After some experimentaion, you can see that the data downloads are rather large. Either the "just an rss file" is not totaly feasible and a smarter service is required or more research is needed
-
 ```
 GET http://cf.delek.org/
 ```
@@ -48,7 +51,9 @@ The feed is OpenPGP encrypted and would decypts to something like
 			}]
 		}
 	},
-...
+    {
+    "etc":"etc"
+    }
 ]
 ```
 If something in the feed is not meant for all friends, it is encrypted before adding it to the feed, so you get:
@@ -56,7 +61,7 @@ If something in the feed is not meant for all friends, it is encrypted before ad
 	{
 		"date":"03-11-2015T14:00:00.0Z",
 		"user":"http://cf.delek.org/planeguy",
-		"private":"ENCRYPTED-POST-WITH-ONLY-SESSION-KEYS-FOR-CHANCEULA-AND-PIXELANTE"
+		"private":"ENCRYPTED-POST-WITH-SESSION-KEYS-FOR-SPECIFIC-USERS"
 		}
 	}
 ```
