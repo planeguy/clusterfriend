@@ -51,7 +51,7 @@ define(["jquery", "knockout", "openpgp", "friends/generate"],
                 openpgp.encryptMessage(
                     keys(),
                     ko.toJSON({
-                        frequency: 12345,
+                        period: 12345,
                         posts: posts()
                     })
                 ).then(function (result) {
