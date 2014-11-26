@@ -1,23 +1,27 @@
 #OBJECTS
 
 ##Person
-- user: user's url, used as primary id
+- id: user's url, used as primary id
 - name: username
-- feed: url to the main feed for this user
-- public-feed: url to the unencrypted feed for this user
 - image: link to user's profile image
 - profile: url to json object that describes the person
 - key: a person's public key
+- session: url to session keys resource
+- feed: url to the main feed for this user
 
 ##Post
-- url: url to post permalink (id)
+- id: url to post permalink (id)
 - date
 - poster: the user url of the person who posted the post
 - public: content intended for anyone who can decrypt the encapsulating feed
 - private: an encrypted content record for selected users
 
 ##Feed
-- feed: array of posts
+- period: average posting period (as in 1/frequency) with a minimum period of 10-15 minutes
+- feed: array of feed-entries
+###Feed entry
+- date
+- url: permalink of post
 
 ##Content
 - relates: array of relationships to other objects in the network

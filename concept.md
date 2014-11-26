@@ -24,27 +24,13 @@ An update feed would be able to communicate new posts and their intended recipie
 Public feeds are seperate as they are not encrypted in any way. If they follow the standard, then they should still be readable by clusterfriend clients.
 
 #The Bad News
-After some experimentaion, you can see in (./sizes/quick-maths.md) that the data downloads are rather large. Either the "just an rss file" is not totaly feasible and a smarter service is required or more research is needed.
-##Possible Solutions
-###Smaller batch size
-less to download at once, but prolific users will still pump out a ton of updates. They might pump them out faster than you can download and you'd miss some. We can fix this with a previous property on the feed, but still.
-###Expiring session key + smallest batch size (1)
-we actually get rid of "feeds" and just have a "last post" entry point. The last post will have a previous link to the previous item. It'd make downloading slow if you haven't gotten updates in a while, though since updates would be downloaded individually. Every update would be encrypted with the same session key, available somewhere else on the server.
-###Feed batch size selection
-the entry point actually is a series of feed digests with the latest update date listed as a property. for example:
-    ```JSON
-    {
-        "03-11-2015T14:00:00.0Z":"http://cf.delek.org/planeguy/digests/1",
-        "03-11-2015T14:00:00.0Z":"http://cf.delek.org/planeguy/digests/5",
-        "03-11-2015T08:00:00.0Z":"http://cf.delek.org/planeguy/digests/10",
-        "02-11-2015T20:00:00.0Z":"http://cf.delek.org/planeguy/digests/25",
-        "01-11-2015T18:00:00.0Z":"http://cf.delek.org/planeguy/digests/50",
-        "01-11-2015T06:00:00.0Z":"http://cf.delek.org/planeguy/digests/100"
-    }
-    ```
-The downside is that now posting an update requires regenerating these files. It's a good job for a service, but if we're gonna have a service, then we might as well go full service.
-###Condensed Feed
-The feed entries are reduced to only date & url. This method would cause a lot more server hits to load posts, but the raw data is tiny (7K for 100 posts). Since we're using the permalink as an id, we can save downloaded items locally to reduce extra downloads. The local cache can also expire after a set period (based on user?)
+After some experimentaion, you can see in (./sizes/quick-maths.md) that the data downloads are rather large if encrypted simply with PGP. 
+##Condensed Feed
+The feed entries are reduced to only date & url. This method would cause a lot more server hits to load posts, but the raw data is tiny (7K for 100 posts before encryption). Since we're using the permalink as an id, we can save downloaded items locally to reduce extra downloads. The local cache can also expire after a set period (based on user?).
+##A modified compression
+Basic OpenPGP attaches all session keys for all users onto the encrypted block. In the case of a condensed feed of 100 posts for 255 users, this is a bloat of 376%. If we split the two concepts - session key file + encrypted file - we can download the session key only when it changes. This would allow us to only download the actual feed when changes happen... instead of and extra 376% every time.
+##But now there's no private data in the feed
+SO do we even need to encrypt the feed? Probably not. If we leave the feed unencrypted with only dates and permalinks (and maybe a "next entry id" generated value), we save some processing time. Posts would still have to be encrypted and for bandwidth's sake using the modified compression above. This also means the need for a public-only feed is gone; as you download individual posts, you would find they are encrypted or not.
 ###A little more techincal
 I think it would be totally feasible to just use OpenPGP (minus keyrings & trusted verifiers) to encrypt a public feed resource, and additionally any private posts within. 
 ```
