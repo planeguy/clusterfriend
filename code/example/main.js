@@ -3,7 +3,8 @@ requirejs(["require-config"], function () {
         function (ko, vm) {
             ko.applyBindings(vm({
                 loadFriends: 255,
-                generateFeed: 100
+                generateFeed: 100,
+                feed: "condensed"
             }));
         });
 });

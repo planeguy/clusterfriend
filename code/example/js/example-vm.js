@@ -1,5 +1,5 @@
-define(["jquery", "knockout", "openpgp", "text!./feeds/sample-posts.txt", "friends/generate"],
-    function ($, ko, openpgp, sampleposts, generateFriends) {
+define(["jquery", "knockout", "openpgp", "friends/generate"],
+    function ($, ko, openpgp, generateFriends) {
         return function exampleVM(options) {
 
             var friends = ko.observableArray([]).extend({
@@ -10,9 +10,7 @@ define(["jquery", "knockout", "openpgp", "text!./feeds/sample-posts.txt", "frien
             });
             var currentTab = ko.observable("before");
 
-            var samples = JSON.parse(sampleposts);
-
-            function getSamplePost() {
+            function getSamplePostFrom(samples) {
                 return samples[Math.floor(Math.random() * (samples.length))];
             }
 
@@ -39,7 +37,7 @@ define(["jquery", "knockout", "openpgp", "text!./feeds/sample-posts.txt", "frien
                 return friends().map(function (f) {
                     return openpgp.key.readArmored(f.key.publicKeyArmored).keys[0];
                 });
-            })
+            });
 
             var encrypting = ko.observable(false);
             var feed = ko.observable("");
@@ -52,7 +50,10 @@ define(["jquery", "knockout", "openpgp", "text!./feeds/sample-posts.txt", "frien
                 openpgp.initWorker("js/vendor/openpgp.worker.min.js");
                 openpgp.encryptMessage(
                     keys(),
-                    ko.toJSON(posts())
+                    ko.toJSON({
+                        frequency: 12345,
+                        posts: posts()
+                    })
                 ).then(function (result) {
                     feed(result);
                     currentPost("");
@@ -70,11 +71,15 @@ define(["jquery", "knockout", "openpgp", "text!./feeds/sample-posts.txt", "frien
                 });
             }
             if (options && options.generateFeed) {
-                var newposts = [];
-                for (var i = options.generateFeed; i > -1; i--) {
-                    newposts.push(getSamplePost());
-                }
-                posts(newposts);
+                $.get("js/feeds/" + options.feed + ".txt")
+                    .then(function (sampleResults) {
+                        var samples = JSON.parse(sampleResults);
+                        var newposts = [];
+                        for (var i = options.generateFeed; i > -1; i--) {
+                            newposts.push(getSamplePostFrom(samples));
+                        }
+                        posts(newposts);
+                    });
             } else if (options && options.loadFeed) {
                 $.get("js/feeds/" + options.loadFeed + ".txt")
                     .then(function (f) {

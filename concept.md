@@ -43,7 +43,8 @@ the entry point actually is a series of feed digests with the latest update date
     }
     ```
 The downside is that now posting an update requires regenerating these files. It's a good job for a service, but if we're gonna have a service, then we might as well go full service.
-
+###Condensed Feed
+The feed entries are reduced to only date & url. This method would cause a lot more server hits to load posts, but the raw data is tiny (7K for 100 posts). Since we're using the permalink as an id, we can save downloaded items locally to reduce extra downloads. The local cache can also expire after a set period (based on user?)
 ###A little more techincal
 I think it would be totally feasible to just use OpenPGP (minus keyrings & trusted verifiers) to encrypt a public feed resource, and additionally any private posts within. 
 ```
