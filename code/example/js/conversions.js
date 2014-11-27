@@ -86,7 +86,7 @@ define(function () {
 
             str_len = str.length;
             for (i = 0; i < str_len; ++i) {
-                str_data[count++] = str.charCodeAt(i);
+                str_data[count++] = parseInt(str.charCodeAt(i));
             }
             return str_data;
         }

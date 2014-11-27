@@ -121,6 +121,15 @@ define(["jquery", "knockout", "openpgp", "friends/generate", "lzma", "conversion
                             myLZMA.decompress(conversions.str2bin(plain), function (result) {
                                 received(result);
                             });
+                            myLZMA.decompress(testing().original, function (result) {
+                                testing({
+                                    original: testing().original,
+                                    toStr: testing().toStr,
+                                    fromStr: testing().fromStr,
+                                    decompressedOriginal: result,
+                                    comparison: (conversions.str2bin(plain) == testing().original)
+                                });
+                            });
                         } else {
                             received(plain);
                         }

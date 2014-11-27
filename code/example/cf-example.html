@@ -70,9 +70,13 @@
                 </div>
 
                 <div data-bind="with:testing">
-                    <textarea data-bind="text:original"></textarea>
-                    <textarea data-bind="text:toStr"></textarea>
-                    <textarea data-bind="text:fromStr"></textarea>
+                    <textarea data-bind="text:$data.original"></textarea>
+                    <textarea data-bind="text:$data.toStr"></textarea>
+                    <textarea data-bind="text:$data.fromStr"></textarea>
+                    <textarea data-bind="text:$data.decompressedOriginal"></textarea>
+                    <div>
+                        comparison original==decrypted: <span data-bind="text:$data.comparison"></span>
+                    </div>
                 </div>
 
                 <strong>Decrypted</strong>
