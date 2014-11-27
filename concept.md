@@ -24,13 +24,15 @@ An update feed would be able to communicate new posts and their intended recipie
 Public feeds are seperate as they are not encrypted in any way. If they follow the standard, then they should still be readable by clusterfriend clients.
 
 #The Bad News
-After some experimentaion, you can see in (./sizes/quick-maths.md) that the data downloads are rather large if encrypted simply with PGP. 
-##Condensed Feed
-The feed entries are reduced to only date & url. This method would cause a lot more server hits to load posts, but the raw data is tiny (7K for 100 posts before encryption). Since we're using the permalink as an id, we can save downloaded items locally to reduce extra downloads. The local cache can also expire after a set period (based on user?).
-##A modified compression
-Basic OpenPGP attaches all session keys for all users onto the encrypted block. In the case of a condensed feed of 100 posts for 255 users, this is a bloat of 376%. If we split the two concepts - session key file + encrypted file - we can download the session key only when it changes. This would allow us to only download the actual feed when changes happen... instead of and extra 376% every time.
-##But now there's no private data in the feed
-SO do we even need to encrypt the feed? Probably not. If we leave the feed unencrypted with only dates and permalinks (and maybe a "next entry id" generated value), we save some processing time. Posts would still have to be encrypted and for bandwidth's sake using the modified compression above. This also means the need for a public-only feed is gone; as you download individual posts, you would find they are encrypted or not.
+After some experimentaion, you can see in (./sizes/quick-maths.md) that the data downloads are rather large if encrypted simply with PGP. 255 Friends adds roughly 30-40K to each feed file. 30K is considered obnoxiously large by RSS standards, so this is unacceptable.
+##Smaller batches
+Smaller batches don't significantly help. The size of the session keys alone is around 30k, so any content you trim off the feed text is insignificant.
+##A modified encryption
+If we split the two concepts - session key file + encrypted file - we can download the session key only when it changes. This would allow us to only download the actual feed when changes happen. A full feed is around 40k, which is still over our obnoxious threshold.
+##Condensed feeds and batches
+We can try a condensed feed. It would have limited data on posts: date, id, batch-id. We can cache which posts we've already seen and only download batches that contain unseen posts. batches for this can be extra small: 10 to 15 posts. Also, since no private data is in the feed anymore, it does not have to be encrypted, only compressed. A compressed, unencrypted feed can be shrunk down to less than a K.
+##Precompressing
+If we precompress the feed, we get terrific performance: the PGP is smaller than the original! *However*, that also means we have to somehow include compression, or the ability to indicate compressed content. 
 ###A little more techincal
 I think it would be totally feasible to just use OpenPGP (minus keyrings & trusted verifiers) to encrypt a public feed resource, and additionally any private posts within. 
 ```

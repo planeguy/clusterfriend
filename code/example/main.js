@@ -4,7 +4,8 @@ requirejs(["require-config"], function () {
             ko.applyBindings(vm({
                 loadFriends: 255,
                 generateFeed: 100,
-                feed: "condensed"
+                feed: "full",
+                precompress: true
             }));
         });
 });

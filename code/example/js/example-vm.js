@@ -1,5 +1,5 @@
-define(["jquery", "knockout", "openpgp", "friends/generate"],
-    function ($, ko, openpgp, generateFriends) {
+define(["jquery", "knockout", "openpgp", "friends/generate", "lzma", "conversions"],
+    function ($, ko, openpgp, generateFriends, lzma, conversions) {
         return function exampleVM(options) {
 
             var friends = ko.observableArray([]).extend({
@@ -44,16 +44,13 @@ define(["jquery", "knockout", "openpgp", "friends/generate"],
             var posts = ko.observableArray([]);
             var currentPost = ko.observable("");
 
-            function encryptFeed() {
+            function encryptFeed(feedString) {
                 currentTab("after");
                 encrypting(true);
                 openpgp.initWorker("js/vendor/openpgp.worker.min.js");
                 openpgp.encryptMessage(
                     keys(),
-                    ko.toJSON({
-                        period: 12345,
-                        posts: posts()
-                    })
+                    feedString
                 ).then(function (result) {
                     feed(result);
                     currentPost("");
@@ -70,7 +67,15 @@ define(["jquery", "knockout", "openpgp", "friends/generate"],
                     content: content || currentPost()
                 });
             }
-            if (options && options.generateFeed) {
+
+            if (options && options.loadFeed) {
+                $.get("js/feeds/" + options.loadFeed + ".txt")
+                    .then(function (f) {
+                        posts(JSON.parse(f));
+                    }, function (err) {
+                        alert(JSON.stringify(err));
+                    });
+            } else if (options && options.generateFeed) {
                 $.get("js/feeds/" + options.feed + ".txt")
                     .then(function (sampleResults) {
                         var samples = JSON.parse(sampleResults);
@@ -80,23 +85,45 @@ define(["jquery", "knockout", "openpgp", "friends/generate"],
                         }
                         posts(newposts);
                     });
-            } else if (options && options.loadFeed) {
-                $.get("js/feeds/" + options.loadFeed + ".txt")
-                    .then(function (f) {
-                        posts(JSON.parse(f));
-                    }, function (err) {
-                        alert(JSON.stringify(err));
-                    });
             }
 
             var received = ko.observable("");
+
+            var testing = ko.observable();
+
+            function encrypt() {
+                var feedObject = ko.toJSON({
+                    period: 12345,
+                    posts: posts()
+                });
+                if (options && options.precompress) {
+                    var myLZMA = new LZMA("js/vendor/lzma_worker.js");
+                    myLZMA.compress(JSON.stringify(feedObject), 5, function (result) {
+                        testing({
+                            original: result,
+                            toStr: conversions.bin2str(result),
+                            fromStr: conversions.str2bin(conversions.bin2str(result))
+                        });
+                        encryptFeed(conversions.bin2str(result));
+                    });
+                } else {
+                    encryptFeed(JSON.stringify(feedObject));
+                }
+            }
 
             function decrypt(user) {
                 var pk = openpgp.key.readArmored(user.key.privateKeyArmored).keys[0];
                 pk.decrypt(user.user);
                 openpgp.decryptMessage(pk, openpgp.message.readArmored(feed()))
                     .then(function (plain) {
-                        received(plain)
+                        if (options && options.precompress) {
+                            var myLZMA = new LZMA("js/vendor/lzma_worker.js");
+                            myLZMA.decompress(conversions.str2bin(plain), function (result) {
+                                received(result);
+                            });
+                        } else {
+                            received(plain);
+                        }
                     }).catch(function (err) {
                         received(err);
                     });
@@ -112,7 +139,7 @@ define(["jquery", "knockout", "openpgp", "friends/generate"],
                     post();
                 },
                 encrypt: function () {
-                    encryptFeed();
+                    encrypt();
                 },
                 decrypt: function (u) {
                     decrypt(u);
@@ -138,7 +165,8 @@ define(["jquery", "knockout", "openpgp", "friends/generate"],
                             return ((feed().length - JSON.stringify(posts()).length) / (JSON.stringify(posts()).length)) * 100;
                         })
                     }
-                }
+                },
+                testing: testing
             };
 
         }

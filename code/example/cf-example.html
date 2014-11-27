@@ -44,22 +44,37 @@
     <section data-bind="visible:tab()=='after'" class="grid">
         <!-- output -->
         <div class="grid-item">
-            <div style="position:fixed;bottom:0;width:50%;">
+            <div style="position:relative;top:0;">
                 <div class="primary panel" data-bind="visible:encrypting">ENCRYPTING...</div>
                 <div class="grid">
                     <textarea class="grid-item" data-bind="text:feed" rows="5"></textarea>
                 </div>
                 <small>length: <span data-bind="text:feed().length"></span></small>
                 <div class="panel">
-                    <p>Original size: <span data-bind="text:comparison.originalsize"></span>
-                    </p>
-                    <p>Encrypted size: <span data-bind="text:comparison.encryptedsize"></span>
-                    </p>
+
                     <div class="grid">
-                        <div class="grid-item" data-bind="text:comparison.difference.raw"></div>
-                        <div class="grid-item"> <span data-bind="text:comparison.difference.percentage"></span>%</div>
+                        <div class="grid-item">
+                            <p>Original size: <span data-bind="text:comparison.originalsize"></span>
+                            </p>
+                        </div>
+                        <div class="grid-item">
+                            <p>Encrypted size: <span data-bind="text:comparison.encryptedsize"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid">
+                        <div class="grid-item"><span>Difference in bytes </span><span data-bind="text:comparison.difference.raw"></span>
+                        </div>
+                        <div class="grid-item"><span>Percent difference </span><span data-bind="text:comparison.difference.percentage"></span>%</div>
                     </div>
                 </div>
+
+                <div data-bind="with:testing">
+                    <textarea data-bind="text:original"></textarea>
+                    <textarea data-bind="text:toStr"></textarea>
+                    <textarea data-bind="text:fromStr"></textarea>
+                </div>
+
                 <strong>Decrypted</strong>
                 <div class="grid">
                     <textarea class="grid-item" data-bind="text:received" rows="10"></textarea>
