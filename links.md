@@ -10,5 +10,9 @@ http://mcavage.me/node-restify
 http://www.openpgp.org/
 https://github.com/openpgpjs/openpgpjs
 
+##Compression
+https://github.com/nmrugg/LZMA-JS
+
+
 ##HATEOAS FOR THE HATEOAS THRONE
 http://daveyshafik.com/archives/35507-mimetypes-and-apis.html
