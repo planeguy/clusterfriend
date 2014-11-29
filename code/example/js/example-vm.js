@@ -1,5 +1,5 @@
-define(["jquery", "knockout", "openpgp", "friends/generate", "lzma", "conversions"],
-    function ($, ko, openpgp, generateFriends, lzma, conversions) {
+define(["jquery", "knockout", "openpgp", "friends/generate", "zlib", "encoding", "conversions"],
+    function ($, ko, openpgp, generateFriends, zlib, encoding, conversions) {
         return function exampleVM(options) {
 
             var friends = ko.observableArray([]).extend({
@@ -44,22 +44,6 @@ define(["jquery", "knockout", "openpgp", "friends/generate", "lzma", "conversion
             var posts = ko.observableArray([]);
             var currentPost = ko.observable("");
 
-            function encryptFeed(feedString) {
-                currentTab("after");
-                encrypting(true);
-                openpgp.initWorker("js/vendor/openpgp.worker.min.js");
-                openpgp.encryptMessage(
-                    keys(),
-                    feedString
-                ).then(function (result) {
-                    feed(result);
-                    currentPost("");
-                    encrypting(false);
-                }).catch(function (err) {
-                    console.log(err);
-                    encrypting(false);
-                });
-            }
 
             function post(content) {
                 posts().push({
@@ -91,21 +75,32 @@ define(["jquery", "knockout", "openpgp", "friends/generate", "lzma", "conversion
 
             var testing = ko.observable();
 
+            function encryptFeed(feedString) {
+                currentTab("after");
+                encrypting(true);
+
+                openpgp.initWorker("js/vendor/openpgp.worker.min.js");
+
+                var msg = openpgp.message.fromBinary(feedString);
+                msg = msg.encrypt(keys());
+                feed(openpgp.armor.encode(openpgp.enums.armor.message, msg.packets.write()));
+                currentPost("");
+                encrypting(false);
+            }
+
             function encrypt() {
                 var feedObject = ko.toJSON({
                     period: 12345,
                     posts: posts()
                 });
                 if (options && options.precompress) {
-                    var myLZMA = new LZMA("js/vendor/lzma_worker.js");
-                    myLZMA.compress(JSON.stringify(feedObject), 5, function (result) {
-                        testing({
-                            original: result,
-                            toStr: conversions.bin2str(result),
-                            fromStr: conversions.str2bin(conversions.bin2str(result))
-                        });
-                        encryptFeed(conversions.bin2str(result));
+                    var deflate = new Zlib.Deflate(JSON.stringify(feedObject));
+                    var compressed = deflate.compress();
+                    var decoded = (new TextDecoder("iso-8859-15")).decode(compressed);
+                    testing({
+                        beforeEncryption: decoded
                     });
+                    encryptFeed(decoded);
                 } else {
                     encryptFeed(JSON.stringify(feedObject));
                 }
@@ -114,28 +109,25 @@ define(["jquery", "knockout", "openpgp", "friends/generate", "lzma", "conversion
             function decrypt(user) {
                 var pk = openpgp.key.readArmored(user.key.privateKeyArmored).keys[0];
                 pk.decrypt(user.user);
-                openpgp.decryptMessage(pk, openpgp.message.readArmored(feed()))
-                    .then(function (plain) {
-                        if (options && options.precompress) {
-                            var myLZMA = new LZMA("js/vendor/lzma_worker.js");
-                            myLZMA.decompress(conversions.str2bin(plain), function (result) {
-                                received(result);
-                            });
-                            myLZMA.decompress(testing().original, function (result) {
-                                testing({
-                                    original: testing().original,
-                                    toStr: testing().toStr,
-                                    fromStr: testing().fromStr,
-                                    decompressedOriginal: result,
-                                    comparison: (conversions.str2bin(plain) == testing().original)
-                                });
-                            });
-                        } else {
-                            received(plain);
-                        }
-                    }).catch(function (err) {
-                        received(err);
+                var msg = openpgp.message.readArmored(feed());
+                msg = msg.decrypt(pk);
+                var decoded = msg.getLiteralData();
+                var encoded = (new TextEncoder()).encode(decoded);
+
+                if (options && options.precompress) {
+                    testing({
+                        beforeEncryption: testing().beforeEncryption,
+                        afterDecryption: decoded,
+                        comparison: JSON.stringify({
+                            "length before": testing().beforeEncryption.length,
+                            "length after": decoded.length
+                        })
                     });
+                    var inflate = new Zlib.Inflate(encoded);
+                    var result = inflate.decompress();
+                } else {
+                    received(plain);
+                }
             }
 
             return {

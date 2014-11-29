@@ -8,7 +8,9 @@ requirejs.config({
         "text": "vendor/text",
         "jquery": "vendor/jquery-2.1.1.min",
         "es6-promise": "vendor/es6-promise-2.0.0.min",
-        "lzma": "vendor/lzma"
+        "lzma": "vendor/lzma",
+        "zlib": "vendor/zlib_and_gzip.min",
+        "encoding": "vendor/encoding"
     },
     shim: {
         "knockout.mapper": {

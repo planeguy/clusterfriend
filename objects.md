@@ -18,6 +18,7 @@
 
 ##Feed
 - period: average posting period (as in 1/frequency) with a minimum period of 10-15 minutes
+- meta: metadata for the feed, including possible compression algorithms
 - feed: array of feed-entries
 ###Feed entry
 - date

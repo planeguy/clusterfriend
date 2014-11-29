@@ -70,9 +70,9 @@ define(function () {
             len = byte_arr.length;
 
             for (i = 0; i < len; ++i) {
-                if (byte_arr[i] < 0) {
-                    byte_arr[i] = byte_arr[i] + 256;
-                }
+//                if (byte_arr[i] < 0) {
+//                    byte_arr[i] = byte_arr[i] + 256;
+//                }
                 str_str += String.fromCharCode(byte_arr[i]);
             }
 
