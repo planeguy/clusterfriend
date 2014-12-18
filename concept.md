@@ -36,7 +36,7 @@ A common social network action is sharing another user's post. In the post relat
 ```json
 {"relates":[
 {"shares":{
-"url":"http://a.server/~myfriend/postid,
+"url":"http://a.server/~myfriend/postid",
 "poster":"myfriend",
 "public":"Hello all"
 }}
