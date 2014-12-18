@@ -35,11 +35,11 @@ Post content has a structured relation part, and an unstructured content part. T
 A common social network action is sharing another user's post. In the post relationship field, we can add the entire post object in the "shares" property. So, for example the post content of my share could look similar to:
 ```json
 {"relates":[
-{"shares":{
-"url":"http://a.server/~myfriend/postid",
-"poster":"myfriend",
-"public":"Hello all"
-}}
+  {"shares":{
+    "url":"http://a.server/~myfriend/postid",
+    "poster":"myfriend",
+    "public":"Hello all"
+  }}
 ]}
 ```
 This would send the entire content to my friends, but it would break the social contract with the friend I'm sharing (i.e. you're sharing my friends-only post with people who are not my friend). G+ currently allows this, but it warns you what you're doing. In addition, it also allows you to disable re-sharing of a post: something only a centralized system could do. Due to the distrbuted nature of our system here, there's nothing to stop a malicious CF client from sharing things once its decrypted. But I suppose that goes for any cryptogaphy: if you can't trust the person you're sending encrypted things to, then what's the point?
