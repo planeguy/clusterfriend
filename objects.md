@@ -1,36 +1,54 @@
 #OBJECTS
 
 ##Person
-- user: user's url, used as primary id
+- id: user's url, used as primary id
 - name: username
-- feed: url to the primary feed for this user
-- public-feed: url to the public, unencrypted feed for this user
 - image: link to user's profile image
 - profile: url to json object that describes the person
 - key: a person's public key
+- feed: url to the main feed for this user
 
 ##Post
-- rcpt: recipients list of person for private encrypted content
+- id: url to post permalink (id)
 - date
-- poster:person who posted the post
-- public: content intended for anyone who can decrypt the encapsulated post
-- encrypted: an encrypted content record
-- decrypted: content that has been decrypted from or intended for encryption to the encrypted content field
+- poster: the user url of the person who posted the post
+- for: an object with either an url to session keys group OR  a full session keys group
+- public: content intended for anyone who can decrypt the encapsulating feed
+- private: an encrypted content record for selected users
+
+###For
+- url: url to a group
+- group: an actual group
+
+##Group
+- id: url of session key group
+- key: encrypted session key and expiry for each member of the group
+- profile: private encrypted profile of the group (for members only)
 
 ##Feed
-- feed: array of posts
+- period: average posting period (as in 1/frequency) with a minimum period of 10-15 minutes
+- meta: metadata for the feed, including possible compression algorithms
+- feed: array of feed-entries
+###Feed entry
+- date
+- url: permalink of post
 
-##Sub-Objects
-These objects are part of other objects (post), but are not first-citizens. They are not accessable individually though the api like the rest.
-
-###Content
-- url: url to post permalink
-- relates: relationships to other objects in the network
-- summary: short description of content. limited amount of characters. optionally reject feeds with long summaries
+##Content
+- relates: array of relationships to other objects in the network
 - content: actual content
-- more: true|false if there is no more content available at the url (either this record IS the url or the content fits in the summary)
+- more-at-url: true|false. more content at permalink. use for long posts.
 
-###Relates
-- replies-to: a post that this is a reply to
-- tags: a list of people who are tagged
-- shares: a post that this post shares
+###Relationships
+**Reply-To**  
+- replies-to: post/poster url pair this post replies to
+**Share**  
+- shares: post/poster url pair this post shares
+**Tag**  
+- tags: url of a tagged user  
+**Like**  
+- likes: post/poster url pair liked by the user  
+**Dislike**  
+- dislikes: post/poster url pair disliked by the user
+**post/poster url pair**
+- post: url of post
+- poster: url of poster
