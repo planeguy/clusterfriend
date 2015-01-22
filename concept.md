@@ -1,47 +1,164 @@
 #Basic Concept
 I love social networks, but I hate the people who run them beacause invariably they fuck them up trying to monetize them. I want to host my own network for just me & my friends, free of any corporate bullshit. More in the spirit of usenet, but with more not-text.
 
-So in a rant on the [Rudram Thread](https://www.facebook.com/chris.rudram/posts/10153870108165247), I said: 
+So in a rant on the [Rudram Thread](https://www.facebook.com/chris.rudram/posts/10153870108165247), I said:
 
 >"fuck bookface. we should all go back to blogging with rss feeds in a distributed fashion. I mean seriously, we developed a decentralized, robust network of connected servers AND a really simple syndication format for dissemination of information, only to end up putting all our shit on some corporations server cluster with the faint hope they won't curate my photos of dinner out of your feed."
 
 Easier said than done, but in that spirit (the spirit of put my money where my mouth is) I started this project: a decentralized social network. I'm sure someone has thought of this before, <del>I've yet to find it</del> such as the [W3C](http://www.w3.org/Social/WG). There is still a focus on servers and API, which means my webmaster must grant me the privilege of sharing my feed.
 
-List of friends -> Query friend URL for updates -> Collate locally
+#Goals
+1. Distributed
+2. Small updates/low bandwidth
+3. Encrypted
+2. No special server
 
-I would imagine it like rss feeds but with a focus on short posts and being able to reference other posts. Yes I know trying to compete with RSS/Atom is dumb.
-
-#Encryped for multiple recipients
-The basic idea is that everything is encrypted. For space and sanity's sake let's limit friend lists? Something nerdy like 128 or 256?
-posts can be:
-
-1. a group of friends
-2. specific friends
-3. public
-
-An update feed would be able to communicate new posts and their intended recipients. 
-
-Public feeds are seperate as they are not encrypted in any way. If they follow the standard, then they should still be readable by clusterfriend clients.
-
-#General
-So a user would make a post targeted for a specific group or specific set of friends.
-
-- in the case of a group: the more common case, since we would most often post to the "all friends" group. The post would be marked with a "for" object that includes a url to a resource containing a list of encrypted session keys. If the client does not find its public key in the session resource, it is not part of the group. Both the session key, its expiry date, and if the user is not part of this group can be cached by the user's client.
-- in the case of specific friends: a one-time session key is generated and added to a one-time group (and then all encrypted for each recipient, of course). If the client can't find the user's public key, then the message is not for him and the message is ignored. The one-time group should not be cached, though the fact the message is not for the user can be cached.
-
-Post content has a structured relation part, and an unstructured content part. The relation part refers to other posts and posters and can be totalled/cached locally for meta data. The unstructured part is raw content.
-
-##Shares
-A common social network action is sharing another user's post. In the post relationship field, we can add the entire post object in the "shares" property. So, for example the post content of my share could look similar to:
+#Distributed
+Each user would have a profile resource accessible by http. In other words, a file. This profile should give the following details:
+- user name
+- location of feed resource
+- public key
+- other optional fields
 ```json
-{"relates":[
-  {"shares":{
-    "url":"http://a.server/~myfriend/postid",
-    "poster":"myfriend",
-    "public":"Hello all"
-  }}
-]}
+{
+    "name":"planeguy",
+    "feed":"http://cf.delek.org/feed",
+    "key":"-----BEGIN PGP PUBLIC KEY BLOCK-----
+    Version: BCPG C# v1.6.1.0
+    mQENBFTBPuoBCACWdy5tVvxM+inOiW5xfebIklAR/Ow281317pu98iKRcanw9kNu
+    xtpUp9q/U3uYt9y2aO1mgfn38Vk3knzheE9h3u38Az6DsAMfSOb+SOk7truC/vMG
+    +R6P4gMLGIwT3DyzHUP4W3xtPhWBa2Ec//f/OrpnpySQ7N9LWhwFeTkglRNq45CB
+    0AehKsVuBG2fgLQlckELl733LoUwreVNlW2TeaPVuVYOXw9W/+gKaFSS7D+Zucuq
+    7m+CyxGJgv4Z94Mv7Yh6huGNt3jcaKfzkbdp3yudmvuJWs6dhXkSCOwuMc2z691l
+    ZbyczaecVi3zDcK/fJ7hWrJUYwHw89WNQkJlABEBAAG0AIkBHAQQAQIABgUCVME+
+    6gAKCRDpUW+N+1xMw9CfB/96F0JyEROO419ITiCx2EAO0clQ0Rxwz/lfnWxj+Sxi
+    lQYETq8b3EsSRY2SxSe9x8scIamT6qh3C2bNKWlp/2LFyFW3pbn9RsoyAlipjnCR
+    0WtNomd6yOTbz+Mi97n7lOJQf6Ur8jviAB/tP/gpPwf3k2/mhbDvrkTEmVTipCBC
+    /0LWyw2wQVCjlKmQrhx430BBJ6W8E+I0TkN7dHjmohEAv80+9D6UB/Oi7Q60mzr7
+    9aO9lVcEZRsalEQIEu8m5dJhSVertvajHzC/uYW7iEnDnmX3Gs3rhBkuGyR5Yp1d
+    h+vQHCxq5K4dg9DBbx+GSKbOAX18ngQZPrhbAhfSX05J
+    =d8PR
+    -----END PGP PUBLIC KEY BLOCK-----",
+    "image":"http://cf.delek.org/image.png",
+    "location":"canada"
+}
 ```
-This would send the entire content to my friends, but it would break the social contract with the friend I'm sharing (i.e. you're sharing my friends-only post with people who are not my friend). G+ currently allows this, but it warns you what you're doing. In addition, it also allows you to disable re-sharing of a post: something only a centralized system could do. Due to the distrbuted nature of our system here, there's nothing to stop a malicious CF client from sharing things once its decrypted. But I suppose that goes for any cryptogaphy: if you can't trust the person you're sending encrypted things to, then what's the point?
-##Likes & Dislikes
-The most common, and probably most problamatic part of this system is likes & dislikes. I think we can get away with just including a url to the post for these, because if you can't see the original, then who cares if your friend likes it. The like should be cached, though in case it's just a matter that you haven't checked the feed of the original poster yet.
+This object could be saved directly by the app and used for checking feeds/sending items
+
+#Small updates/low bandwith
+Bandwidth use must be minimized to make it feasable. Feed items must be small, but still useful.
+```json
+{
+    "id":1,
+    "date":"20150101",
+    "text":"Hello guys!",
+    "link":"http://www.clickhole.com"
+}
+```
+```json
+{
+    "id":2,
+    "date":"20150101",
+    "like":"http://cf.chancedixon.com/feed#5"
+}
+```
+```json
+{
+    "id":3,
+    "date":"20150101",
+    "reply":"http://clusterfriend.com/pixelant3/feed#7",
+    "text":"i can't even",
+    "image":"http://www.clickhole.com/images/dog-hates-kenzian-econom.png"
+}
+```
+Anything longer than the third one should be disallowed, but I don't know how to prevent it before it gets published. Longer posts can be split into an article, linked externally.
+```json
+{
+    "id":4,
+    "date":"20150101",
+    "text":"Today's rant 2015-01-01",
+    "article":"http://cf.delek.org/articles/1"
+}
+```
+Feeds themselves must be paged or we risk downloading a users entire post history everytime they update.
+```json
+{
+    "previous":"http://cf.delek.org/archived/9",
+    "items":[
+        {
+            "id":2,
+            "date":"20150101",
+            "like":"http://cf.chancedixon.com/feed#5"
+        }
+    ]
+}
+```
+#Encrypted
+Feeds should be encrypted to provide privacy. Users should be able to share only to a particular group or user(s).
+
+To do this, encrypt using a symmetric key, and encrypt that using each user's asymmetric key.
+```json
+{
+    "id":5,
+    "secret":{
+        "group":"http://cf.delek.org/groups/friends",
+        "data":""
+    }
+}
+```
+where the group is a set of keys per user, indicated by that user's public key fingerprint:
+```json
+{
+    "bd72de858fd6eeae2b022fdacd68a73a67902918":"-----BEGIN PGP PUBLIC KEY BLOCK-----
+    Version: BCPG C# v1.6.1.0
+    mQENBFTBPuoBCACWdy5tVvxM+inOiW5xfebIklAR/Ow281317pu98iKRcanw9kNu
+    xtpUp9q/U3uYt9y2aO1mgfn38Vk3knzheE9h3u38Az6DsAMfSOb+SOk7truC/vMG
+    +R6P4gMLGIwT3DyzHUP4W3xtPhWBa2Ec//f/OrpnpySQ7N9LWhwFeTkglRNq45CB
+    0AehKsVuBG2fgLQlckELl733LoUwreVNlW2TeaPVuVYOXw9W/+gKaFSS7D+Zucuq
+    7m+CyxGJgv4Z94Mv7Yh6huGNt3jcaKfzkbdp3yudmvuJWs6dhXkSCOwuMc2z691l
+    ZbyczaecVi3zDcK/fJ7hWrJUYwHw89WNQkJlABEBAAG0AIkBHAQQAQIABgUCVME+
+    6gAKCRDpUW+N+1xMw9CfB/96F0JyEROO419ITiCx2EAO0clQ0Rxwz/lfnWxj+Sxi
+    lQYETq8b3EsSRY2SxSe9x8scIamT6qh3C2bNKWlp/2LFyFW3pbn9RsoyAlipjnCR
+    0WtNomd6yOTbz+Mi97n7lOJQf6Ur8jviAB/tP/gpPwf3k2/mhbDvrkTEmVTipCBC
+    /0LWyw2wQVCjlKmQrhx430BBJ6W8E+I0TkN7dHjmohEAv80+9D6UB/Oi7Q60mzr7
+    9aO9lVcEZRsalEQIEu8m5dJhSVertvajHzC/uYW7iEnDnmX3Gs3rhBkuGyR5Yp1d
+    h+vQHCxq5K4dg9DBbx+GSKbOAX18ngQZPrhbAhfSX05J
+    =d8PR
+    -----END PGP PUBLIC KEY BLOCK-----",
+    "bd72de858fd6eeae2b022fdacd68a73a67902919":"-----BEGIN PGP PUBLIC KEY BLOCK-----
+    Version: BCPG C# v1.6.1.0
+    mQENBFTBPuoBCACWdy5tVvxM+inOiW5xfebIklAR/Ow281317pu98iKRcanw9kNu
+    xtpUp9q/U3uYt9y2aO1mgfn38Vk3knzheE9h3u38Az6DsAMfSOb+SOk7truC/vMG
+    +R6P4gMLGIwT3DyzHUP4W3xtPhWBa2Ec//f/OrpnpySQ7N9LWhwFeTkglRNq45CB
+    0AehKsVuBG2fgLQlckELl733LoUwreVNlW2TeaPVuVYOXw9W/+gKaFSS7D+Zucuq
+    7m+CyxGJgv4Z94Mv7Yh6huGNt3jcaKfzkbdp3yudmvuJWs6dhXkSCOwuMc2z691l
+    ZbyczaecVi3zDcK/fJ7hWrJUYwHw89WNQkJlABEBAAG0AIkBHAQQAQIABgUCVME+
+    6gAKCRDpUW+N+1xMw9CfB/96F0JyEROO419ITiCx2EAO0clQ0Rxwz/lfnWxj+Sxi
+    lQYETq8b3EsSRY2SxSe9x8scIamT6qh3C2bNKWlp/2LFyFW3pbn9RsoyAlipjnCR
+    0WtNomd6yOTbz+Mi97n7lOJQf6Ur8jviAB/tP/gpPwf3k2/mhbDvrkTEmVTipCBC
+    /0LWyw2wQVCjlKmQrhx430BBJ6W8E+I0TkN7dHjmohEAv80+9D6UB/Oi7Q60mzr7
+    9aO9lVcEZRsalEQIEu8m5dJhSVertvajHzC/uYW7iEnDnmX3Gs3rhBkuGyR5Yp1d
+    h+vQHCxq5K4dg9DBbx+GSKbOAX18ngQZPrhbAhfSX05J
+    =d8PR
+    -----END PGP PUBLIC KEY BLOCK-----"
+}
+```
+We get into a situation of bloat if we have a lot of custom groups, but alternately we want to minimize adding keys into the main feed.
+
+#No special server
+If we want to do this without a special server, everything must be able to function using basic http/ftp on basic web hosting. This is mostly possible thanks to RESTful services being written to resemble basic http. Our API must take into account what we don't get with the most basic http, including query parameters. Luckily a good RESTful service should operate using resources just fine.
+```
+http://cf.delek.org
+    /profile (profile file)
+    /feed (feed file)
+    /groups
+        /friends (group file)
+        /secret-club (group file)
+    /archives
+        /7 (feed file)
+        /6 (feed file)
+    /articles
+        /1 (article file)
+    /images
+        /dogs-playing-camel-up.png
+```
