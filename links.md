@@ -13,6 +13,7 @@ https://github.com/openpgpjs/openpgpjs
 #Crypto
 http://bitwiseshiftleft.github.io/sjcl/
 https://github.com/digitalbazaar/forge
+https://github.com/bitchan/eccrypto
 
 ##Compression
 https://github.com/imaya/zlib.js
