@@ -80,7 +80,7 @@ Anything longer than the third one should be disallowed, but I don't know how to
     "article":"http://cf.delek.org/articles/1"
 }
 ```
-Feeds themselves must be paged or we risk downloading a users entire post history everytime they update.
+Feeds themselves must be paged or we risk downloading a users entire post history every time they update.
 ```json
 {
     "previous":"http://cf.delek.org/archived/9",
