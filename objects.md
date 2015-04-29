@@ -23,24 +23,24 @@
 ##Feed Item
 ###required
 - id
+- date
 
 ###optional
-- date
 - text
-- image: href to an images
-- link: link
+- image: href to an image
+- link: href link
 - article: href to article
 - source: href to the original source for this post
 - reply: href to a feed item that this is a reply to
 - like: href to a feed item liked
 - dislike: href to a feed item disliked
-- secret: secret item
+- secrets: secret item
 
 ###Secret Item
 In theory, if a post has a secret item it should not have other items. Any other data should be ignored.
 ####required
 - group: href to group this post is for
-- data: encrypted feed item. This is a full feed item, including the id, which should be the same as its parent feed item
+- data: encrypted feed item. This is a feed item, including the id, which should be the same as its parent feed item
 
 ####optional
 - compression: if the data is compressed, name the compression
