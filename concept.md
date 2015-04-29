@@ -11,7 +11,7 @@ Easier said than done, but in that spirit (the spirit of put my money where my m
 1. Distributed
 2. Small updates/low bandwidth
 3. Encrypted
-2. Minimal special server
+2. No special server
 
 #Distributed
 Each user would have a profile resource accessible by http. In other words, a file. This profile should give the following details:
@@ -49,7 +49,7 @@ This object could be saved directly by the app and used for checking feeds/sendi
 Bandwidth use must be minimized to make it feasable. Feed items must be small, but still useful.
 ```json
 {
-    "id":1,
+    "id":"http://cf.delek.org/feed#1",
     "date":"20150101",
     "text":"Hello guys!",
     "link":"http://www.clickhole.com"
@@ -57,14 +57,14 @@ Bandwidth use must be minimized to make it feasable. Feed items must be small, b
 ```
 ```json
 {
-    "id":2,
+    "id":"http://cf.delek.org/feed#2",
     "date":"20150101",
     "like":"http://cf.chancedixon.com/feed#5"
 }
 ```
 ```json
 {
-    "id":3,
+    "id":"http://cf.delek.org/feed#3",
     "date":"20150101",
     "reply":"http://clusterfriend.com/pixelant3/feed#7",
     "text":"i can't even",
@@ -74,7 +74,7 @@ Bandwidth use must be minimized to make it feasable. Feed items must be small, b
 Anything longer than the third one should be disallowed, but I don't know how to prevent it before it gets published. Longer posts can be split into an article, linked externally.
 ```json
 {
-    "id":4,
+    "id":"http://cf.delek.org/feed#4",
     "date":"20150101",
     "text":"Today's rant 2015-01-01",
     "article":"http://cf.delek.org/articles/1"
@@ -86,7 +86,7 @@ Feeds themselves must be paged or we risk downloading a users entire post histor
     "previous":"http://cf.delek.org/archived/9",
     "items":[
         {
-            "id":2,
+            "id":"http://cf.delek.org/feed#2",
             "date":"20150101",
             "like":"http://cf.chancedixon.com/feed#5"
         }
@@ -106,10 +106,11 @@ To do this, encrypt using a symmetric key, and encrypt that using each user's as
     }
 }
 ```
-where the group is a set of keys per user, indicated by that user's public key fingerprint:
+where the group is the id of a set of users who can decrypt the common symmetric key. A user would get their general and group keys from a file named for their public key fingerprint
+**http://cf.delek.org/friends/bd72de858fd6eeae2b022fdacd68a73a67902918**
 ```json
 {
-    "bd72de858fd6eeae2b022fdacd68a73a67902918":"-----BEGIN PGP PUBLIC KEY BLOCK-----
+    "http://cf.delek.org/groups/friends":"-----BEGIN PGP PUBLIC KEY BLOCK-----
     Version: BCPG C# v1.6.1.0
     mQENBFTBPuoBCACWdy5tVvxM+inOiW5xfebIklAR/Ow281317pu98iKRcanw9kNu
     xtpUp9q/U3uYt9y2aO1mgfn38Vk3knzheE9h3u38Az6DsAMfSOb+SOk7truC/vMG
@@ -125,7 +126,7 @@ where the group is a set of keys per user, indicated by that user's public key f
     h+vQHCxq5K4dg9DBbx+GSKbOAX18ngQZPrhbAhfSX05J
     =d8PR
     -----END PGP PUBLIC KEY BLOCK-----",
-    "bd72de858fd6eeae2b022fdacd68a73a67902919":"-----BEGIN PGP PUBLIC KEY BLOCK-----
+    "http://cf.delek.org/groups/emu-club":"-----BEGIN PGP PUBLIC KEY BLOCK-----
     Version: BCPG C# v1.6.1.0
     mQENBFTBPuoBCACWdy5tVvxM+inOiW5xfebIklAR/Ow281317pu98iKRcanw9kNu
     xtpUp9q/U3uYt9y2aO1mgfn38Vk3knzheE9h3u38Az6DsAMfSOb+SOk7truC/vMG
@@ -143,17 +144,17 @@ where the group is a set of keys per user, indicated by that user's public key f
     -----END PGP PUBLIC KEY BLOCK-----"
 }
 ```
-We get into a situation of bloat if we have a lot of custom groups, but alternately we want to minimize adding keys into the main feed.
+Items could be targeted to a user directly by directly encrypting the item with their PK, but at that point, you're talking about a chat service.
 
-#Minimal special server
+#No special server
 If we want to do this without a special server, everything must be able to function using basic http/ftp on basic web hosting. This is mostly possible thanks to RESTful services being written to resemble basic http. Our API must take into account what we don't get with the most basic http, including query parameters. Luckily a good RESTful service should operate using resources just fine.
 ```
 http://cf.delek.org
     /profile (profile file)
     /feed (feed file)
-    /groups
-        /friends (group file)
-        /secret-club (group file)
+    /friends
+        /bd72de858fd6eeae2b022fdacd68a73a67902918 (user keys file)
+        /bd72de858fd6eeae2b022fdacd68a73a67902919 (user keys file)
     /archives
         /7 (feed file)
         /6 (feed file)
@@ -161,24 +162,4 @@ http://cf.delek.org
         /1 (article file)
     /images
         /dogs-playing-camel-up.png
-```
-It could be more efficient to use a *little* bit of code. In this way we could make downloading new updates more atomic and customized. One way to do this would be to have updates as individual files, then the server would be a collate and concat function.
-```
-http://cf.delek.org
-    /profile (profile file)
-    /feed (feed server)
-    /groups
-        /friends (group file)
-        /secret-club (group file)
-    /items
-        /6 (feed item)
-        /5 (feed item)
-        /4 (feed item)
-        /3 (feed item)
-        /2 (feed item)
-        /1 (feed item)
-    /articles
-        /1 (article file)
-    /images
-        /dogs-playing-twilight-imperium.png
 ```
