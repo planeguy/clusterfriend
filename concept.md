@@ -11,7 +11,7 @@ Easier said than done, but in that spirit (the spirit of put my money where my m
 1. Distributed
 2. Small updates/low bandwidth
 3. Encrypted
-2. No special server
+2. Minimal special server
 
 #Distributed
 Each user would have a profile resource accessible by http. In other words, a file. This profile should give the following details:
@@ -145,7 +145,7 @@ where the group is a set of keys per user, indicated by that user's public key f
 ```
 We get into a situation of bloat if we have a lot of custom groups, but alternately we want to minimize adding keys into the main feed.
 
-#No special server
+#Minimal special server
 If we want to do this without a special server, everything must be able to function using basic http/ftp on basic web hosting. This is mostly possible thanks to RESTful services being written to resemble basic http. Our API must take into account what we don't get with the most basic http, including query parameters. Luckily a good RESTful service should operate using resources just fine.
 ```
 http://cf.delek.org
@@ -161,4 +161,24 @@ http://cf.delek.org
         /1 (article file)
     /images
         /dogs-playing-camel-up.png
+```
+It could be more efficient to use a *little* bit of code. In this way we could make downloading new updates more atomic and customized. One way to do this would be to have updates as individual files, then the server would be a collate and concat function.
+```
+http://cf.delek.org
+    /profile (profile file)
+    /feed (feed server)
+    /groups
+        /friends (group file)
+        /secret-club (group file)
+    /items
+        /6 (feed item)
+        /5 (feed item)
+        /4 (feed item)
+        /3 (feed item)
+        /2 (feed item)
+        /1 (feed item)
+    /articles
+        /1 (article file)
+    /images
+        /dogs-playing-twilight-imperium.png
 ```
