@@ -99,7 +99,7 @@ Feeds should be encrypted to provide privacy. Users should be able to share only
 To do this, encrypt using a symmetric key, and encrypt that using each user's asymmetric key.
 ```json
 {
-    "id":5,
+    "id":"http://cf.delek.org/feed#5",
     "secret":{
         "group":"http://cf.delek.org/groups/friends",
         "data":""
@@ -107,8 +107,8 @@ To do this, encrypt using a symmetric key, and encrypt that using each user's as
 }
 ```
 where the group is the id of a set of users who can decrypt the common symmetric key. A user would get their general and group keys from a file named for their public key fingerprint
-**http://cf.delek.org/friends/bd72de858fd6eeae2b022fdacd68a73a67902918**
-```json
+```
+Contents of http://cf.delek.org/friends/bd72de858fd6eeae2b022fdacd68a73a67902918
 {
     "http://cf.delek.org/groups/friends":"-----BEGIN PGP PUBLIC KEY BLOCK-----
     Version: BCPG C# v1.6.1.0
@@ -151,15 +151,15 @@ If we want to do this without a special server, everything must be able to funct
 ```
 http://cf.delek.org
     /profile (profile file)
-    /feed (feed file)
+    /feed (main feed file)
     /friends
         /bd72de858fd6eeae2b022fdacd68a73a67902918 (user keys file)
         /bd72de858fd6eeae2b022fdacd68a73a67902919 (user keys file)
     /archives
-        /7 (feed file)
-        /6 (feed file)
+        /1 (feed file)
+        /2 (feed file)
     /articles
         /1 (article file)
     /images
-        /dogs-playing-camel-up.png
+        /dogs-playing-colt-express.png
 ```
