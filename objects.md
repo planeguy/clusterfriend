@@ -45,7 +45,6 @@ In theory, if a post has a secret item it should not have other items. Any other
 ####optional
 - compression: if the data is compressed, name the compression
 
-##Group
+##Friend
 ###required
-- &lt;public key fingerprint&gt;: the encrypted asymmetric key for the user with this fingerprint
-- NO OTHER FIELDS ALLOWED
+- &lt;group name&gt;: the encrypted symmetric key for the group the user is part of
