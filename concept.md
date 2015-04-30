@@ -102,49 +102,18 @@ To do this, encrypt using a symmetric key, and encrypt that using each user's as
     "id":"http://cf.delek.org/feed#5",
     "secret":{
         "group":"http://cf.delek.org/groups/friends",
-        "data":""
+        "data":"ENCRYPTED DATA"
     }
 }
 ```
-where the group is the id of a set of users who can decrypt the common symmetric key. A user would get their general and group keys from a file named for their public key fingerprint
-```
-Contents of http://cf.delek.org/friends/bd72de858fd6eeae2b022fdacd68a73a67902918
+where the group is the id of a set of users who can decrypt the common symmetric key. A user would get their general and group keys from a file named for their public key fingerprint. The entire file would be encrypted and when decrypted would be a list of symmetric keys for the groups the friend belongs to:
+```json
 {
-    "http://cf.delek.org/groups/friends":"-----BEGIN PGP PUBLIC KEY BLOCK-----
-    Version: BCPG C# v1.6.1.0
-    mQENBFTBPuoBCACWdy5tVvxM+inOiW5xfebIklAR/Ow281317pu98iKRcanw9kNu
-    xtpUp9q/U3uYt9y2aO1mgfn38Vk3knzheE9h3u38Az6DsAMfSOb+SOk7truC/vMG
-    +R6P4gMLGIwT3DyzHUP4W3xtPhWBa2Ec//f/OrpnpySQ7N9LWhwFeTkglRNq45CB
-    0AehKsVuBG2fgLQlckELl733LoUwreVNlW2TeaPVuVYOXw9W/+gKaFSS7D+Zucuq
-    7m+CyxGJgv4Z94Mv7Yh6huGNt3jcaKfzkbdp3yudmvuJWs6dhXkSCOwuMc2z691l
-    ZbyczaecVi3zDcK/fJ7hWrJUYwHw89WNQkJlABEBAAG0AIkBHAQQAQIABgUCVME+
-    6gAKCRDpUW+N+1xMw9CfB/96F0JyEROO419ITiCx2EAO0clQ0Rxwz/lfnWxj+Sxi
-    lQYETq8b3EsSRY2SxSe9x8scIamT6qh3C2bNKWlp/2LFyFW3pbn9RsoyAlipjnCR
-    0WtNomd6yOTbz+Mi97n7lOJQf6Ur8jviAB/tP/gpPwf3k2/mhbDvrkTEmVTipCBC
-    /0LWyw2wQVCjlKmQrhx430BBJ6W8E+I0TkN7dHjmohEAv80+9D6UB/Oi7Q60mzr7
-    9aO9lVcEZRsalEQIEu8m5dJhSVertvajHzC/uYW7iEnDnmX3Gs3rhBkuGyR5Yp1d
-    h+vQHCxq5K4dg9DBbx+GSKbOAX18ngQZPrhbAhfSX05J
-    =d8PR
-    -----END PGP PUBLIC KEY BLOCK-----",
-    "http://cf.delek.org/groups/emu-club":"-----BEGIN PGP PUBLIC KEY BLOCK-----
-    Version: BCPG C# v1.6.1.0
-    mQENBFTBPuoBCACWdy5tVvxM+inOiW5xfebIklAR/Ow281317pu98iKRcanw9kNu
-    xtpUp9q/U3uYt9y2aO1mgfn38Vk3knzheE9h3u38Az6DsAMfSOb+SOk7truC/vMG
-    +R6P4gMLGIwT3DyzHUP4W3xtPhWBa2Ec//f/OrpnpySQ7N9LWhwFeTkglRNq45CB
-    0AehKsVuBG2fgLQlckELl733LoUwreVNlW2TeaPVuVYOXw9W/+gKaFSS7D+Zucuq
-    7m+CyxGJgv4Z94Mv7Yh6huGNt3jcaKfzkbdp3yudmvuJWs6dhXkSCOwuMc2z691l
-    ZbyczaecVi3zDcK/fJ7hWrJUYwHw89WNQkJlABEBAAG0AIkBHAQQAQIABgUCVME+
-    6gAKCRDpUW+N+1xMw9CfB/96F0JyEROO419ITiCx2EAO0clQ0Rxwz/lfnWxj+Sxi
-    lQYETq8b3EsSRY2SxSe9x8scIamT6qh3C2bNKWlp/2LFyFW3pbn9RsoyAlipjnCR
-    0WtNomd6yOTbz+Mi97n7lOJQf6Ur8jviAB/tP/gpPwf3k2/mhbDvrkTEmVTipCBC
-    /0LWyw2wQVCjlKmQrhx430BBJ6W8E+I0TkN7dHjmohEAv80+9D6UB/Oi7Q60mzr7
-    9aO9lVcEZRsalEQIEu8m5dJhSVertvajHzC/uYW7iEnDnmX3Gs3rhBkuGyR5Yp1d
-    h+vQHCxq5K4dg9DBbx+GSKbOAX18ngQZPrhbAhfSX05J
-    =d8PR
-    -----END PGP PUBLIC KEY BLOCK-----"
+    "http://cf.delek.org/groups/friends":"SYMMETRIC KEY",
+    "http://cf.delek.org/groups/emu-club":"SYMMETRIC KEY"
 }
 ```
-Items could be targeted to a user directly by directly encrypting the item with their PK, but at that point, you're talking about a chat service.
+Items could be targeted to a user directly by directly encrypting the item with their PK, but at that point, you're talking about a chat service or basic PGP.
 
 #No special server
 If we want to do this without a special server, everything must be able to function using basic http/ftp on basic web hosting. This is mostly possible thanks to RESTful services being written to resemble basic http. Our API must take into account what we don't get with the most basic http, including query parameters. Luckily a good RESTful service should operate using resources just fine.
