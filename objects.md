@@ -1,14 +1,15 @@
 #OBJECTS
 
-##Profile
+##Home
 ###required
 - name
 - feed: href to main feed object
 
 ###optional
-- key: user's public key. it's possible that this user only makes and accepts open, public posts
-- image: href to profile image
+- pk: user's public key. it's possible that this user only makes and accepts open, public posts
+- img: href to profile image
 - cover: href to cover image
+- sigs: href to list of signed homes (id verification)
 - contact: a way to send a message to the user (email? IM?)
 - realName: {first: "user's first name", last: "users's last name"}
 
@@ -23,28 +24,22 @@
 ##Feed Item
 ###required
 - id
+- home
 - date
 
 ###optional
 - text
 - image: href to an image
 - link: href link
-- article: href to article
-- source: href to the original source for this post
+- article: href to article relative to the home of this item
 - reply: href to a feed item that this is a reply to
 - like: href to a feed item liked
 - dislike: href to a feed item disliked
-- secrets: secret item
-
-###Secret Item
-In theory, if a post has a secret item it should not have other items. Any other data should be ignored.
-####required
-- group: href to group this post is for
-- data: encrypted feed item. This is a feed item, including the id, which should be the same as its parent feed item
-
-####optional
-- compression: if the data is compressed, name the compression
+- sgroup: if this item a secret item envelope, this is the group the item is meant for
+- sdata: data that comprises a secret item for a group
 
 ##Friend
 ###required
-- &lt;group name&gt;: the encrypted symmetric key for the group the user is part of
+- home
+- groups: map informat of group name:symmetric key of the group encrypted with the friend's public key
+- signed: if we are holding a signed copy of this friend's home file, this is the href to that
