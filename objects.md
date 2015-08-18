@@ -3,7 +3,7 @@
 ##Home
 ###required
 - name
-- feed: href to main feed object
+- feed: href to current feed object
 
 ###optional
 - pk: user's public key. it's possible that this user only makes and accepts open, public posts
@@ -19,8 +19,7 @@
 - items: array of feed items
 
 ##optional
-- next: href to next (newer) feed page
-- prev: href to previous (older) feed page
+- older: href to previous (older) feed page
 
 ##Feed Item
 ###required
