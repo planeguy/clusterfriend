@@ -100,10 +100,8 @@ To do this, encrypt using a symmetric key, and encrypt that using each user's as
 ```json
 {
     "id":"http://cf.delek.org/feed#5",
-    "secret":{
-        "group":"http://cf.delek.org/groups/friends",
-        "data":"ENCRYPTED DATA"
-    }
+    "sgroup":"http://cf.delek.org/groups/friends",
+    "sdata":"ENCRYPTED DATA"
 }
 ```
 where the group is the id of a set of users who can decrypt the common symmetric key. A user would get their general and group keys from a file named for their public key fingerprint. The entire file would be encrypted and when decrypted would be a list of symmetric keys for the groups the friend belongs to:
