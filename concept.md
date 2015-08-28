@@ -117,7 +117,7 @@ Items could be targeted to a user directly by directly encrypting the item with 
 If we want to do this without a special server, everything must be able to function using basic http/ftp on basic web hosting. This is mostly possible thanks to RESTful services being written to resemble basic http. Our API must take into account what we don't get with the most basic http, including query parameters. Luckily a good RESTful service should operate using resources just fine.
 ```
 http://cf.delek.org
-    /profile (profile file)
+    /home
     /feed (main feed file)
     /friends
         /bd72de858fd6eeae2b022fdacd68a73a67902918 (user keys file)

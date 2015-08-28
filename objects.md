@@ -3,14 +3,15 @@
 ##Home
 ###required
 - name
-- feed: href to current feed object
+- home: href to this file
+- feed: href to feed
 
 ###optional
 - pk: user's public key. it's possible that this user only makes and accepts open, public posts
 - img: href to profile image
 - cover: href to cover image
-- articles: href to articles
-- sigs: href to list of signed homes (id verification)
+- articles: href to articles folder
+- friends: href to friend groups folder
 - contact: a way to send a message to the user (email? IM?)
 - realName: {first: "user's first name", last: "users's last name"}
 
@@ -18,13 +19,14 @@
 ###required
 - items: array of feed items
 
-##optional
-- older: href to previous (older) feed page
+###optional
+- old: boolean for if this is current (falsey including undefined) or old (truthy)
 
 ##Feed Item
 ###required
 - id
-- home
+- feed: href of the feed
+- home: href of the poster
 - date
 
 ###optional
@@ -42,6 +44,6 @@
 
 ##Friend
 ###required
-- home
-- groups: map informat of group name:symmetric key of the group encrypted with the friend's public key
-- signed: if we are holding a signed copy of this friend's home file, this is the href to that
+- home: href to home file
+- endorsement: signature of home file at that href
+- groups: map in format of {group name:symmetric key of the group encrypted with the friend's public key}
