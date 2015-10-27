@@ -90,8 +90,8 @@ Feeds themselves must be paged or we risk downloading a users entire post histor
             "like":"http://cf.chancedixon.com/feeds/1#5"
         }
     ],
-    next: "http://cf.delek.org/feeds/3",
-    prev: "http://cf.delek.org/feeds/1"
+    "next": "http://cf.delek.org/feeds/3",
+    "prev": "http://cf.delek.org/feeds/1"
 }
 ```
 #Encrypted
