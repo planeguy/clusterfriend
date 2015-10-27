@@ -59,14 +59,15 @@ Bandwidth use must be minimized to make it feasable. Feed items must be small, b
 {
     "id":"http://cf.delek.org/feeds/1#2",
     "date":"20150101",
-    "like":"http://cf.chancedixon.com/feeds/1#5"
+    "re":"http://cf.chancedixon.com/feeds/1#5",
+    "feeling":"like"
 }
 ```
 ```json
 {
     "id":"http://cf.delek.org/feeds/1#3",
     "date":"20150101",
-    "reply":"http://clusterfriend.com/pixelant3/feeds/2#7",
+    "re":"http://clusterfriend.com/pixelant3/feeds/2#7",
     "text":"i can't even",
     "image":"http://www.clickhole.com/images/dog-hates-kenzian-econom.png"
 }
@@ -87,7 +88,8 @@ Feeds themselves must be paged or we risk downloading a users entire post histor
         {
             "id":"http://cf.delek.org/feeds/2#17",
             "date":"20150101",
-            "like":"http://cf.chancedixon.com/feeds/1#5"
+            "re":"http://cf.chancedixon.com/feeds/1#5",
+            "feeling":"like"
         }
     ],
     "next": "http://cf.delek.org/feeds/3",
