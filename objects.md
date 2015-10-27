@@ -4,7 +4,7 @@
 ###required
 - name
 - home: href to this file
-- feed: href to feed
+- feed: href to most current feed
 
 ###optional
 - pk: user's public key. it's possible that this user only makes and accepts open, public posts
@@ -20,12 +20,11 @@
 - items: array of feed items
 
 ###optional
-- old: boolean for if this is current (falsey including undefined) or old (truthy)
+- newerRefresh: indicates if this is the current feed (falsey) or if there is a newer feed (href to home so we can get the new one)
 
 ##Feed Item
 ###required
 - id
-- feed: href of the feed
 - home: href of the poster
 - date
 
