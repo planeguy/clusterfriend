@@ -16,13 +16,13 @@ Easier said than done, but in that spirit (the spirit of put my money where my m
 #Distributed
 Each user would have a profile resource accessible by http. In other words, a file. This profile should give the following details:
 - user name
-- location of feed resource
+- location of current feed resource
 - public key
 - other optional fields
 ```json
 {
     "name":"planeguy",
-    "feed":"http://cf.delek.org/feed",
+    "feed":"http://cf.delek.org/feeds/2",
     "key":"-----BEGIN PGP PUBLIC KEY BLOCK-----
     Version: BCPG C# v1.6.1.0
     mQENBFTBPuoBCACWdy5tVvxM+inOiW5xfebIklAR/Ow281317pu98iKRcanw9kNu
@@ -49,7 +49,7 @@ This object could be saved directly by the app and used for checking feeds/sendi
 Bandwidth use must be minimized to make it feasable. Feed items must be small, but still useful.
 ```json
 {
-    "id":"http://cf.delek.org/feed#1",
+    "id":"http://cf.delek.org/feeds/1#1",
     "date":"20150101",
     "text":"Hello guys!",
     "link":"http://www.clickhole.com"
@@ -57,40 +57,41 @@ Bandwidth use must be minimized to make it feasable. Feed items must be small, b
 ```
 ```json
 {
-    "id":"http://cf.delek.org/feed#2",
+    "id":"http://cf.delek.org/feeds/1#2",
     "date":"20150101",
-    "like":"http://cf.chancedixon.com/feed#5"
+    "like":"http://cf.chancedixon.com/feeds/1#5"
 }
 ```
 ```json
 {
-    "id":"http://cf.delek.org/feed#3",
+    "id":"http://cf.delek.org/feeds/1#3",
     "date":"20150101",
-    "reply":"http://clusterfriend.com/pixelant3/feed#7",
+    "reply":"http://clusterfriend.com/pixelant3/feeds/2#7",
     "text":"i can't even",
     "image":"http://www.clickhole.com/images/dog-hates-kenzian-econom.png"
 }
 ```
-Anything longer than the third one should be disallowed, but I don't know how to prevent it before it gets published. Longer posts can be split into an article, linked externally.
+Anything longer than the third one should be disallowed, but I don't know how to prevent it before it gets published. Longer posts can be split into an externally linked article.
 ```json
 {
-    "id":"http://cf.delek.org/feed#4",
+    "id":"http://cf.delek.org/feeds/1#4",
     "date":"20150101",
     "text":"Today's rant 2015-01-01",
-    "article":"http://cf.delek.org/articles/1"
+    "link":"http://cf.delek.org/content/kale-the-new-flesh.html"
 }
 ```
 Feeds themselves must be paged or we risk downloading a users entire post history every time they update.
 ```json
 {
-    "previous":"http://cf.delek.org/archived/9",
     "items":[
         {
-            "id":"http://cf.delek.org/feed#2",
+            "id":"http://cf.delek.org/feeds/2#17",
             "date":"20150101",
-            "like":"http://cf.chancedixon.com/feed#5"
+            "like":"http://cf.chancedixon.com/feeds/1#5"
         }
-    ]
+    ],
+    next: "http://cf.delek.org/feeds/3",
+    prev: "http://cf.delek.org/feeds/1"
 }
 ```
 #Encrypted
@@ -99,7 +100,7 @@ Feeds should be encrypted to provide privacy. Users should be able to share only
 To do this, encrypt using a symmetric key, and encrypt that using each user's asymmetric key.
 ```json
 {
-    "id":"http://cf.delek.org/feed#5",
+    "id":"http://cf.delek.org/feeds/1#5",
     "sgroup":"http://cf.delek.org/groups/friends",
     "sdata":"ENCRYPTED DATA"
 }
@@ -118,15 +119,14 @@ If we want to do this without a special server, everything must be able to funct
 ```
 http://cf.delek.org
     /home
-    /feed (main feed file)
+    /feeds
+        /1
+        /2
+        /3
     /friends
         /bd72de858fd6eeae2b022fdacd68a73a67902918 (user keys file)
         /bd72de858fd6eeae2b022fdacd68a73a67902919 (user keys file)
-    /archives
-        /1 (feed file)
-        /2 (feed file)
-    /articles
-        /1 (article file)
-    /images
+    /content
+        /kale-the-new-flesh.html
         /dogs-playing-colt-express.png
 ```
