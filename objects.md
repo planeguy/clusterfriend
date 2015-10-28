@@ -16,7 +16,6 @@
 ##Feed
 ###required
 - items: array of feed items
-- signature: a signed hash of the feed document length. used to confirm validity of keys. if the signature doesn't validate, the user should re-download the subscribed friend's home and his groups/friend objects.
 
 ###optional
 - prev: href to previous feed file
@@ -36,6 +35,7 @@
 - feeling: type of feel (like, dislike, etc.)
 - sgroup: if this item a secret item envelope, this is the group the item is meant for
 - sdata: data that comprises a secret item for a group
+- ssig: signed hash of secrt data object
 
 ##Friend
 ###required
