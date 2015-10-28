@@ -16,6 +16,7 @@
 ##Feed
 ###required
 - items: array of feed items
+- signature: a signed hash of the feed document length. used to confirm validity of keys. if the signature doesn't validate, the user should re-download the subscribed friend's home and his groups/friend objects.
 
 ###optional
 - prev: href to previous feed file
