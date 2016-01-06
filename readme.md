@@ -17,28 +17,13 @@ Easier said than done, but in that spirit (the spirit of put my money where my m
 Each user would have a profile resource accessible by http. In other words, a file. This profile should give the following details:
 - user name
 - location of current feed resource
-- public key
+- location of public key
 - other optional fields
 ```json
 {
     "name":"planeguy",
     "feed":"http://cf.delek.org/feeds/2",
-    "key":"-----BEGIN PGP PUBLIC KEY BLOCK-----
-    Version: BCPG C# v1.6.1.0
-    mQENBFTBPuoBCACWdy5tVvxM+inOiW5xfebIklAR/Ow281317pu98iKRcanw9kNu
-    xtpUp9q/U3uYt9y2aO1mgfn38Vk3knzheE9h3u38Az6DsAMfSOb+SOk7truC/vMG
-    +R6P4gMLGIwT3DyzHUP4W3xtPhWBa2Ec//f/OrpnpySQ7N9LWhwFeTkglRNq45CB
-    0AehKsVuBG2fgLQlckELl733LoUwreVNlW2TeaPVuVYOXw9W/+gKaFSS7D+Zucuq
-    7m+CyxGJgv4Z94Mv7Yh6huGNt3jcaKfzkbdp3yudmvuJWs6dhXkSCOwuMc2z691l
-    ZbyczaecVi3zDcK/fJ7hWrJUYwHw89WNQkJlABEBAAG0AIkBHAQQAQIABgUCVME+
-    6gAKCRDpUW+N+1xMw9CfB/96F0JyEROO419ITiCx2EAO0clQ0Rxwz/lfnWxj+Sxi
-    lQYETq8b3EsSRY2SxSe9x8scIamT6qh3C2bNKWlp/2LFyFW3pbn9RsoyAlipjnCR
-    0WtNomd6yOTbz+Mi97n7lOJQf6Ur8jviAB/tP/gpPwf3k2/mhbDvrkTEmVTipCBC
-    /0LWyw2wQVCjlKmQrhx430BBJ6W8E+I0TkN7dHjmohEAv80+9D6UB/Oi7Q60mzr7
-    9aO9lVcEZRsalEQIEu8m5dJhSVertvajHzC/uYW7iEnDnmX3Gs3rhBkuGyR5Yp1d
-    h+vQHCxq5K4dg9DBbx+GSKbOAX18ngQZPrhbAhfSX05J
-    =d8PR
-    -----END PGP PUBLIC KEY BLOCK-----",
+    "key":"http://cf.delek.org/key",
     "image":"http://cf.delek.org/image.png",
     "location":"canada"
 }
@@ -49,7 +34,7 @@ This object could be saved directly by the app and used for checking feeds/sendi
 Bandwidth use must be minimized to make it feasable. Feed items must be small, but still useful.
 ```json
 {
-    "id":"http://cf.delek.org/feeds/1#1",
+    "url":"http://cf.delek.org/feeds/1#1",
     "date":"20150101",
     "text":"Hello guys!",
     "link":"http://www.clickhole.com"
@@ -57,7 +42,7 @@ Bandwidth use must be minimized to make it feasable. Feed items must be small, b
 ```
 ```json
 {
-    "id":"http://cf.delek.org/feeds/1#2",
+    "url":"http://cf.delek.org/feeds/1#2",
     "date":"20150101",
     "re":"http://cf.chancedixon.com/feeds/1#5",
     "feeling":"like"
@@ -65,7 +50,7 @@ Bandwidth use must be minimized to make it feasable. Feed items must be small, b
 ```
 ```json
 {
-    "id":"http://cf.delek.org/feeds/1#3",
+    "url":"http://cf.delek.org/feeds/1#3",
     "date":"20150101",
     "re":"http://clusterfriend.com/pixelant3/feeds/2#7",
     "text":"i can't even",
@@ -75,7 +60,7 @@ Bandwidth use must be minimized to make it feasable. Feed items must be small, b
 Anything longer than the third one should be disallowed, but I don't know how to prevent it before it gets published. Longer posts can be split into an externally linked article.
 ```json
 {
-    "id":"http://cf.delek.org/feeds/1#4",
+    "url":"http://cf.delek.org/feeds/1#4",
     "date":"20150101",
     "text":"Today's rant 2015-01-01",
     "link":"http://cf.delek.org/content/kale-the-new-flesh.html"
@@ -86,7 +71,7 @@ Feeds themselves must be paged or we risk downloading a users entire post histor
 {
     "items":[
         {
-            "id":"http://cf.delek.org/feeds/2#17",
+            "url":"http://cf.delek.org/feeds/2#17",
             "date":"20150101",
             "re":"http://cf.chancedixon.com/feeds/1#5",
             "feeling":"like"
@@ -99,37 +84,47 @@ Feeds themselves must be paged or we risk downloading a users entire post histor
 #Encrypted
 Feeds should be encrypted to provide privacy. Users should be able to share only to a particular group or user(s).
 
-To do this, encrypt using a symmetric key, and encrypt that using each user's asymmetric key.
+To do this, use a simple form of broadcast encryption, encrypting using a symmetric key, and encrypting that using each user's asymmetric key.
 ```json
 {
-    "id":"http://cf.delek.org/feeds/1#5",
-    "sgroup":"http://cf.delek.org/groups/friends",
-    "sdata":"ENCRYPTED DATA"
+    "url":"http://cf.delek.org/feeds/1#5",
+    "date":"20150101",
+    "encrypted":{"group":"http://cf.delek.org/groups/friends","data":"ENCRYPTED DATA"}
 }
 ```
-where the group is the id of a set of users who can decrypt the common symmetric key. A user would get their general and group keys from a file named for their public key fingerprint. The entire file would be encrypted and when decrypted would be a list of symmetric keys for the groups the friend belongs to:
+where the group is an id for a group the data is targeted for. For each user in a group, the poster maintains a file for that user that contains the symmetric key(s) for groups. 
 ```json
 {
     "http://cf.delek.org/groups/friends":"SYMMETRIC KEY",
-    "http://cf.delek.org/groups/emu-club":"SYMMETRIC KEY"
+    "salt-RANDOM STRING-salt": "DIFFERNT RANDOM STRING"
 }
 ```
-Items could be targeted to a user directly by directly encrypting the item with their PK, but at that point, you're talking about a chat service or basic PGP.
+...this file is encrypted using a user's public key so it is accessable only to him. all the files for each friend must be refreshed when a person is added or removed for a group.
+
+A "keys" property in the profile points users where to find a list of key files:
+```json
+{
+    "keys":{
+        "http://cf.chancedixon.com/profile":"http://cf.delek.org/keys/chance",
+        "http://clusterfriend.com/pixelant3/profile":"http://cf.delek.org/keys/audrey"
+    }
+} 
 
 #No special server
 If we want to do this without a special server, everything must be able to function using basic http/ftp on basic web hosting. This is mostly possible thanks to RESTful services being written to resemble basic http. Any server software API must account for things that basic file http does not usually use, like query parameters. Luckily a good RESTful service should operate using resources just fine.
 ```
 http://cf.delek.org
-    /home
+    /profile
     /feeds
         /1
         /2
         /3
-    /friends
-        /cf.chancedixon.com
-        /clusterfriend.com
-            /pixelant3
+    /groups
+        /friends
+        /enemies
+        /breakfast-club
+        /7f043796980974bcb3cc 
     /content
         /kale-the-new-flesh.html
-        /dogs-playing-colt-express.png
+        /dogs-playing-tigris-and-euphrates.png
 ```
