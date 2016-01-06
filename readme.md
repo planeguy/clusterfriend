@@ -9,8 +9,8 @@ Easier said than done, but in that spirit (the spirit of put my money where my m
 
 #Goals
 1. Distributed
+3. Private
 2. Small updates/low bandwidth
-3. Encrypted
 2. No special server
 
 #Distributed
@@ -23,13 +23,35 @@ Each user would have a profile resource accessible by http. In other words, a fi
 {
     "name":"planeguy",
     "feed":"http://cf.delek.org/feeds/2",
-    "key":"http://cf.delek.org/key",
+    "public-key":"http://cf.delek.org/key",
     "image":"http://cf.delek.org/image.png",
     "location":"canada"
 }
 ```
-This object could be saved directly by the app and used for checking feeds/sending items
+This object could be saved directly by the app and used for checking feeds/sending items.
 
+#Private
+Not everyone wants to send things out into the internet publicly or to all their friends. Users should be able to create private groups or feeds to post amongst only authorized friends.
+
+An encrypted profile file can be the home base of private feeds:
+```json
+{
+    "keys":"http://cf.delek.org/keys/7f043796980974bcb3cc",
+    "profile":"ENCRYPTED PROFILE DATA"
+}
+```
+The profile property contains what would be in the basic profile file, plus some group-specific optional properties, such as group name and a link to the user's public profile. The group profile is encrypted with a symmetric key distributed to group members in the keys file:
+```json
+{
+    "http://cf.chancedixon.com/profile":"ENCRYPTED KEY OBJECT",
+    "http://clusterfriend.com/pixelant3/profile":"ENCRYPTED KEY OBJECT"
+}
+    
+```
+The property name is the profile url of a member user. The encrypted key object includes a key property and a random salt to prevent a malicious group member from using a known contents to somehow figure out the keys of other users.
+
+If someone would like to be fully private, he can not post a public profile and only distribute the encrypted one.   
+ 
 #Small updates/low bandwith
 Bandwidth use must be minimized to make it feasable. Feed items must be small, but still useful.
 ```json
@@ -57,7 +79,7 @@ Bandwidth use must be minimized to make it feasable. Feed items must be small, b
     "image":"http://www.clickhole.com/images/dog-hates-kenzian-econom.png"
 }
 ```
-Anything longer than the third one should be disallowed, but I don't know how to prevent it before it gets published. Longer posts can be split into an externally linked article.
+Anything longer than this last one should be disallowed, but I don't know how to prevent it before it gets published. Longer posts can be split into an externally linked article.
 ```json
 {
     "url":"http://cf.delek.org/feeds/1#4",
@@ -81,37 +103,8 @@ Feeds themselves must be paged or we risk downloading a users entire post histor
     "prev": "http://cf.delek.org/feeds/1"
 }
 ```
-#Encrypted
-Feeds should be encrypted to provide privacy. Users should be able to share only to a particular group or user(s).
-
-To do this, use a simple form of broadcast encryption, encrypting using a symmetric key, and encrypting that using each user's asymmetric key.
-```json
-{
-    "url":"http://cf.delek.org/feeds/1#5",
-    "date":"20150101",
-    "encrypted":{"group":"http://cf.delek.org/groups/friends","data":"ENCRYPTED DATA"}
-}
-```
-where the group is an id for a group the data is targeted for. For each user in a group, the poster maintains a file for that user that contains the symmetric key(s) for groups. 
-```json
-{
-    "http://cf.delek.org/groups/friends":"SYMMETRIC KEY",
-    "salt-RANDOM STRING-salt": "DIFFERNT RANDOM STRING"
-}
-```
-...this file is encrypted using a user's public key so it is accessable only to him. all the files for each friend must be refreshed when a person is added or removed for a group.
-
-A "keys" property in the profile points users where to find a list of key files:
-```json
-{
-    "keys":{
-        "http://cf.chancedixon.com/profile":"http://cf.delek.org/keys/chance",
-        "http://clusterfriend.com/pixelant3/profile":"http://cf.delek.org/keys/audrey"
-    }
-} 
-
 #No special server
-If we want to do this without a special server, everything must be able to function using basic http/ftp on basic web hosting. This is mostly possible thanks to RESTful services being written to resemble basic http. Any server software API must account for things that basic file http does not usually use, like query parameters. Luckily a good RESTful service should operate using resources just fine.
+If we want to do this without a special server, everything must be able to function using basic http/ftp on basic web hosting. This is mostly possible thanks to RESTful services being written to resemble basic http. For posting, an app may require ftp access and credentials to write files. Any server software API must account for things that basic file http does not usually use, like query parameters.
 ```
 http://cf.delek.org
     /profile
@@ -119,7 +112,7 @@ http://cf.delek.org
         /1
         /2
         /3
-    /groups
+    /keys
         /friends
         /enemies
         /breakfast-club
