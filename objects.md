@@ -8,7 +8,7 @@
 - feed: link to the most current feed file (if any posts are made)
 
 ###optional
-- public-key: user's public key. it's possible that this user only makes and accepts open, public posts and does not want to be added to someone's posting group. useful for public entities like companies or celebrities.
+- public-key: link to user's public key file. note: a user with a public key file cannot be added to a private group.
 - img: href to profile image
 - cover: href to cover image
 - contact: a way to send a message to the user (email? IM?)
@@ -16,8 +16,12 @@
 
 ##Encrypted Profile
 ###required
-- keys
-- profile
+- keys: link to keys file
+- profile: encrypted profile object
+
+##Keys
+a map of a private profile's symmetric encryption key encrypted for each of the group's users.
+   > dave: ENCRYPTED KEY, mark: ENCRYPTED KEY, jane: ENCRYPTED KEY
 
 ##Feed
 ###required
@@ -30,7 +34,6 @@
 ##Feed Item
 ###required
 - url
-- poster: href to poster's clusterfriend
 - date
 
 ###optional
