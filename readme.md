@@ -43,8 +43,8 @@ An encrypted profile file can be the home base of private feeds:
 The profile property contains what would be in the basic profile file, plus some group-specific optional properties, such as group name and a link to the user's public profile. The group profile is encrypted with a symmetric key distributed to group members in the keys file:
 ```json
 {
-    "http://cf.chancedixon.com/profile":"ENCRYPTED KEY OBJECT",
-    "http://clusterfriend.com/pixelant3/profile":"ENCRYPTED KEY OBJECT"
+    "PUBLIC KEY FINGERPRINT":"ENCRYPTED KEY OBJECT",
+    "PUBLIC KEY FINGERPRINT":"ENCRYPTED KEY OBJECT"
 }
     
 ```

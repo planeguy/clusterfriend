@@ -18,6 +18,7 @@
 ###required
 - keys: link to keys file
 - profile: encrypted profile object
+- hash: this is a hash of the profile and the keys objects. the reason for this is that we do not bother downloading the keys unless the profile has updated.
 
 ##Keys
 a map of a private profile's symmetric encryption key encrypted for each of the group's users.
