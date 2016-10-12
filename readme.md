@@ -33,34 +33,25 @@ We can use the standard RSS2 fields for most things, though we can add fields fo
 #Private
 Not everyone wants to send things out into the internet publicly or to all their friends. Users should be able to create private groups or feeds to post amongst only authorized friends.
 
-We can add a property to the main profile channel that indicates an encryption scheme:
-
-```xml
-<rss>
-    <cf:encrypted>http://cf.delek.org/keys/7f043796980974bcb3cc</cf:encrypted>
-```
-
-The encrypted field includes a link to a keys file. A symmetric key distributed to group members by that file:
+We can add an encryption key to the home channel. It's a synchronous key encrypted using a friend's public key.
 ```xml
 <cf:keys>
-    <cf:key fingerprint="PUBLIC KEY FINGERPRINT">ENCRYPTED KEY OBJECT</cf:key>
-    <cf:key fingerprint="PUBLIC KEY FINGERPRINT">ENCRYPTED KEY OBJECT</cf:key>
-    <cf:key fingerprint="PUBLIC KEY FINGERPRINT">ENCRYPTED KEY OBJECT</cf:key>
+    <cf:key fingerprint="PUBLIC KEY FINGERPRINT" group="1">ENCRYPTED KEY OBJECT</cf:key>
+    <cf:key fingerprint="PUBLIC KEY FINGERPRINT" group="1">ENCRYPTED KEY OBJECT</cf:key>
+    <cf:key fingerprint="PUBLIC KEY FINGERPRINT" group="2">ENCRYPTED KEY OBJECT</cf:key>
 </cf:keys>
     
 ```
 
-Channel items themselves are encrypted.
+Items in the channel are then encrypted 
 ```xml
 <item>
-    <cf:encrypted-item>
-        ENCRYPTED ITEM 
-    </cf:encrypted-item>
+    <description>Encrypted Item</description>
+    <cf:encrypted group="2">
+        stuff
+    </cf:encrypted>
 </item>
 ```
-
-If someone would like to be fully private, he can not post a public profile and only distribute the encrypted one.   
- 
 
 #No special server
 If we want to do this without a special server, everything must be able to function using basic http/ftp on basic web hosting. This is mostly possible thanks to RESTful services being written to resemble basic http. For posting, an app may require ftp access and credentials to write files. Any server software API must account for things that basic file http does not usually use, like query parameters. There is one matter of CORS access for webpages accessing the file through AJAX.
@@ -75,7 +66,7 @@ The difference between a basic blog and a social network is the interconnectedne
     <cf:about>
         https://cf.inter.net/users/pixelante/channels/1/5
     </cf:about>
-    <cf:feel>like</cf:feel>
+    <cf:feels>like</cf:feels>
 </item>
 ```
 You could argue that this is the same as the rss *link* tag, but using custom elements allow us to add context to the link's appearance:
