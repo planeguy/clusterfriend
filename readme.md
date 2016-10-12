@@ -21,6 +21,7 @@ We can use the standard RSS2 fields for most things, though we can add fields fo
 ```xml
 <rss>
     <channel>
+        <cf:ishome>true</cf:ishome>
         <item>
             <description>paged channel</description>
             <pubDate>July 1 2016</pubDate>
@@ -71,15 +72,15 @@ The difference between a basic blog and a social network is the interconnectedne
     <cf:re>
         https://cf.delek.org/channels/7f043796980974bcb3c2/postid=4
     </cf:re>
-    <cf:src>
+    <cf:about>
         https://cf.inter.net/users/pixelante/channels/1/5
-    </cf:src>
+    </cf:about>
     <cf:feel>like</cf:feel>
 </item>
 ```
 You could argue that this is the same as the rss *link* tag, but using custom elements allow us to add context to the link's appearance:
   - if the *re* link is one of my own posts, show it as a reply to that post.
   - we can also do the above recursively to show a line of conversation.
-  - *src* can be added to show the original reason a line of conversation startedin case a line of conservation is interrupted by a user you don't have access to
-  - if the post is in reply something I'm not involved in and don't care about, I can filter out those posts based on the *re* & *src* tags
-  - a proper reshare can be identified as a post with *cf:src* and rss *link* to the same content
+  - *about* can be added to show the original reason a line of conversation startedin case a line of conservation is interrupted by a user you don't have access to
+  - if the post is in reply something I'm not involved in and don't care about, I can filter out those posts based on the *re* & *about* tags
+  - a proper reshare can be identified as a post with *about* and rss *link* to the same content
