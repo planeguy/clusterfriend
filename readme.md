@@ -10,114 +10,70 @@ Easier said than done, but in that spirit (the spirit of put my money where my m
 #Goals
 1. Distributed
 3. Private
-2. Small updates/low bandwidth
 2. No special server
+4. Connected
 
 #Distributed
-Each user would have a profile resource accessible by http. In other words, a file. This profile should give the following details:
-- user name
-- location of current feed resource
-- location of public key
-- other optional fields
-```json
-{
-    "name":"planeguy",
-    "feed":"http://cf.delek.org/feeds/2",
-    "public-key":"http://cf.delek.org/key",
-    "image":"http://cf.delek.org/image.png",
-    "location":"canada"
-}
-```
-This object could be saved directly by the app and used for checking feeds/sending items.
+Each user would have a profile resource accessible by http. In other words, a file. The file should have some info about the user and a list of the last X feed files. This coincidentally looks a lot like an RSS2 feed.
 
+We can use the standard RSS2 fields for most things, though we can add fields for extra CF functions (see later).
+
+```xml
+<rss>
+    <channel>
+        <cf:ishome>true</cf:ishome>
+        <item>
+            <description>paged channel</description>
+            <pubDate>July 1 2016</pubDate>
+            <link>https://cf.delek.org/channels/7f043796980974bcb3c2</link>
+        </item>
+    </channel>
+ </rss>
+ ```
 #Private
 Not everyone wants to send things out into the internet publicly or to all their friends. Users should be able to create private groups or feeds to post amongst only authorized friends.
 
-An encrypted profile file can be the home base of private feeds:
-```json
-{
-    "keys":"http://cf.delek.org/keys/7f043796980974bcb3cc",
-    "profile":"ENCRYPTED PROFILE DATA"
-}
-```
-The profile property contains what would be in the basic profile file, plus some group-specific optional properties, such as group name and a link to the user's public profile. The group profile is encrypted with a symmetric key distributed to group members in the keys file:
-```json
-{
-    "PUBLIC KEY FINGERPRINT":"ENCRYPTED KEY OBJECT",
-    "PUBLIC KEY FINGERPRINT":"ENCRYPTED KEY OBJECT"
-}
+We can add an encryption key to the home channel. It's a synchronous key encrypted using a friend's public key.
+```xml
+<cf:keys>
+    <cf:key fingerprint="PUBLIC KEY FINGERPRINT" group="1">ENCRYPTED KEY OBJECT</cf:key>
+    <cf:key fingerprint="PUBLIC KEY FINGERPRINT" group="1">ENCRYPTED KEY OBJECT</cf:key>
+    <cf:key fingerprint="PUBLIC KEY FINGERPRINT" group="2">ENCRYPTED KEY OBJECT</cf:key>
+</cf:keys>
     
 ```
-The property name is the profile url of a member user. The encrypted key object includes a key property and a random salt to prevent a malicious group member from using a known contents to somehow figure out the keys of other users.
 
-If someone would like to be fully private, he can not post a public profile and only distribute the encrypted one.   
- 
-#Small updates/low bandwith
-Bandwidth use must be minimized to make it feasable. Feed items must be small, but still useful.
-```json
-{
-    "url":"http://cf.delek.org/feeds/1#1",
-    "date":"20150101",
-    "text":"Hello guys!",
-    "link":"http://www.clickhole.com"
-}
+Items in the channel are then encrypted 
+```xml
+<item>
+    <description>Encrypted Item</description>
+    <cf:encrypted group="2">
+        stuff
+    </cf:encrypted>
+</item>
 ```
-```json
-{
-    "url":"http://cf.delek.org/feeds/1#2",
-    "date":"20150101",
-    "re":"http://cf.chancedixon.com/feeds/1#5",
-    "feeling":"like"
-}
-```
-```json
-{
-    "url":"http://cf.delek.org/feeds/1#3",
-    "date":"20150101",
-    "re":"http://clusterfriend.com/pixelant3/feeds/2#7",
-    "text":"i can't even",
-    "image":"http://www.clickhole.com/images/dog-hates-kenzian-econom.png"
-}
-```
-Anything longer than this last one should be disallowed, but I don't know how to prevent it before it gets published. Longer posts can be split into an externally linked article.
-```json
-{
-    "url":"http://cf.delek.org/feeds/1#4",
-    "date":"20150101",
-    "text":"Today's rant 2015-01-01",
-    "link":"http://cf.delek.org/content/kale-the-new-flesh.html"
-}
-```
-Feeds themselves must be paged or we risk downloading a users entire post history every time they update.
-```json
-{
-    "items":[
-        {
-            "url":"http://cf.delek.org/feeds/2#17",
-            "date":"20150101",
-            "re":"http://cf.chancedixon.com/feeds/1#5",
-            "feeling":"like"
-        }
-    ],
-    "next": "http://cf.delek.org/feeds/3",
-    "prev": "http://cf.delek.org/feeds/1"
-}
-```
+
 #No special server
-If we want to do this without a special server, everything must be able to function using basic http/ftp on basic web hosting. This is mostly possible thanks to RESTful services being written to resemble basic http. For posting, an app may require ftp access and credentials to write files. Any server software API must account for things that basic file http does not usually use, like query parameters.
+If we want to do this without a special server, everything must be able to function using basic http/ftp on basic web hosting. This is mostly possible thanks to RESTful services being written to resemble basic http. For posting, an app may require ftp access and credentials to write files. Any server software API must account for things that basic file http does not usually use, like query parameters. There is one matter of CORS access for webpages accessing the file through AJAX, but we'll cross that bridge when we get to it.
+
+A reccomended convention is to have a main home feed which id the last X items, with those items already mirrored in an archived feed file. Permalinks in the home feed *should* point to that file.
+
+#Connected
+The difference between a basic blog and a social network is the interconnectedness of posts. We can add this connectednes simply by enabling a link to another item.
+```xml
+<item>
+    <cf:re>
+        https://cf.delek.org/channels/7f043796980974bcb3c2/postid=4
+    </cf:re>
+    <cf:about>
+        https://cf.inter.net/users/pixelante/channels/1/5
+    </cf:about>
+    <cf:feels>like</cf:feels>
+</item>
 ```
-http://cf.delek.org
-    /profile
-    /feeds
-        /1
-        /2
-        /3
-    /keys
-        /friends
-        /enemies
-        /breakfast-club
-        /7f043796980974bcb3cc 
-    /content
-        /kale-the-new-flesh.html
-        /dogs-playing-tigris-and-euphrates.png
-```
+You could argue that this is the same as the rss *link* tag, but using custom elements allow us to add context to the link's appearance:
+  - if the *re* link is one of my own posts, show it as a reply to that post.
+  - we can also do the above recursively to show a line of conversation.
+  - *about* can be added to show the original reason a line of conversation startedin case a line of conservation is interrupted by a user you don't have access to
+  - if the post is in reply something I'm not involved in and don't care about, I can filter out those posts based on the *re* & *about* tags
+  - a proper reshare can be identified as a post with *about* and rss *link* to the same content
