@@ -54,7 +54,9 @@ Items in the channel are then encrypted
 ```
 
 #No special server
-If we want to do this without a special server, everything must be able to function using basic http/ftp on basic web hosting. This is mostly possible thanks to RESTful services being written to resemble basic http. For posting, an app may require ftp access and credentials to write files. Any server software API must account for things that basic file http does not usually use, like query parameters. There is one matter of CORS access for webpages accessing the file through AJAX.
+If we want to do this without a special server, everything must be able to function using basic http/ftp on basic web hosting. This is mostly possible thanks to RESTful services being written to resemble basic http. For posting, an app may require ftp access and credentials to write files. Any server software API must account for things that basic file http does not usually use, like query parameters. There is one matter of CORS access for webpages accessing the file through AJAX, but we'll cross that bridge when we get to it.
+
+A reccomended convention is to have a main home feed which id the last X items, with those items already mirrored in an archived feed file. Permalinks in the home feed *should* point to that file.
 
 #Connected
 The difference between a basic blog and a social network is the interconnectedness of posts. We can add this connectednes simply by enabling a link to another item.
