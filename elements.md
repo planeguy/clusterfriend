@@ -15,6 +15,10 @@ a single key for private items
 
 **group** (attribute of *key*): group id for private groups
 
+##next
+
+points to the next archived channel for paging
+
 #Item level elements
 
 ##about
