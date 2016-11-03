@@ -1,4 +1,7 @@
 # Feed
+## title
+## description
+## image
 ## home
 *optional*
 points to the home channel that is the start of this feed chain. it may point to this feed (itself) or be null to signify that *this* is the home channel.
@@ -28,6 +31,12 @@ link to a cf post that this is a reply to. by convention, if *about* is omitted,
 ## feels
 
 a token that describes the poster's feeling about the referenced post
+
+## enclosure
+a thing on the internet in the same vein as rss enclosure
+- **url**: url of the enclosure
+- **type**: MIME type of the thing
+- **length**: size of the thing. if missing or 0, we can still download, but a user can decide (don't download in case of limited data, for example) 
 
 ## encrypted
 
