@@ -73,17 +73,15 @@ Items in the channel are then encrypted
 If we want to do this without a special server, everything must be able to function using basic http/ftp on basic web hosting. This is mostly possible thanks to RESTful services being written to resemble basic http. For posting, an app may require ftp access and credentials to write files. Any server software API must account for things that basic file http does not usually use, like query parameters. There is one matter of CORS access for webpages accessing the file through AJAX, but we'll cross that bridge when we get to it.
 
 # Connected
-The difference between a basic blog and a social network is the interconnectedness of posts. We can add this connectednes simply by enabling a link to another item.
+The difference between a basic blog and a social network is the interconnectedness of posts. We can add this connectedness simply by enabling a link to another item with a relation.
 ```json
 {
-    "re":"https://cf.delek.org/channels/7f043796980974bcb3c2/4",
+    "reply":"https://cf.delek.org/channels/7f043796980974bcb3c2/4",
     "about":"https://cf.inter.net/users/pixelante/channels/1/5",
     "feels":"like"
 }
 ```
-You could argue that this is the same as the rss *link* tag, but using custom elements allow us to add context to the link's appearance:
-  - if the *re* link is one of my own posts, show it as a reply to that post.
-  - we can also do the above recursively to show a line of conversation.
-  - *about* can be added to show the original reason a line of conversation startedin case a line of conservation is interrupted by a user you don't have access to
-  - if the post is in reply something I'm not involved in and don't care about, I can filter out those posts based on the *re* & *about* tags
-  - a proper reshare can be identified as a post with *about* and rss *link* to the same content
+- the *re* link is a post, so show it as a reply to that post.
+- we can also do the above recursively to show a line of conversation.
+- *about* can be added to show the original reason a line of conversation started in case a line of conservation is interrupted by a user you don't have access to
+- if the post is in reply something I'm not involved in and don't care about, I can filter out those posts based on the *re* & *about* tags
