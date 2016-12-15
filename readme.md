@@ -14,7 +14,7 @@ Easier said than done, but in that spirit (the spirit of put my money where my m
 4. Connected
 
 # Distributed
-Each user would have at least one feed object that describes the feed and has a list of items. It would also point people to the next feed file sequentially (though it is assumed items are in descending order of datetime). These objects would be accessible by http - in other words a simple file.
+Each user would have at least one feed object that describes the feed and has a list of items. These objects would be accessible by http - in other words a simple file.
 
 In the past, I've compared it to an rss2 feed file and made Clusterfriend an add-on to rss2, but there's so much more in rss2 than we need, so let's go *deeper* and make this more abstract. Let's use json for now since it's much more become the interchange format of the web, but it should be possible to have an xml schema that defined Clusterfriend to use xml as well. 
 
@@ -22,8 +22,7 @@ In the past, I've compared it to an rss2 feed file and made Clusterfriend an add
 ```json
 {
     "name":"Delek Turner",
-    "guid":"http://cf.delek.org/feeds/1",
-    "is-home":false,
+    "id":"http://cf.delek.org/feeds/home",
     "items": [
         {
             "guid":"http://cf.delek.org/feeds/1/1",
@@ -73,17 +72,19 @@ Items in the channel are then encrypted
 If we want to do this without a special server, everything must be able to function using basic http/ftp on basic web hosting. This is mostly possible thanks to RESTful services being written to resemble basic http. For posting, an app may require ftp access and credentials to write files. Any server software API must account for things that basic file http does not usually use, like query parameters. There is one matter of CORS access for webpages accessing the file through AJAX, but we'll cross that bridge when we get to it.
 
 # Connected
-The difference between a basic blog and a social network is the interconnectedness of posts. We can add this connectednes simply by enabling a link to another item.
+The difference between a basic blog and a social network is the interconnectedness of posts. We can add this connectedness simply by enabling a link to another item with a relation.
 ```json
 {
-    "re":"https://cf.delek.org/channels/7f043796980974bcb3c2/4",
+    "reply":"https://cf.delek.org/channels/7f043796980974bcb3c2/4",
     "about":"https://cf.inter.net/users/pixelante/channels/1/5",
     "feels":"like"
 }
 ```
-You could argue that this is the same as the rss *link* tag, but using custom elements allow us to add context to the link's appearance:
-  - if the *re* link is one of my own posts, show it as a reply to that post.
-  - we can also do the above recursively to show a line of conversation.
-  - *about* can be added to show the original reason a line of conversation startedin case a line of conservation is interrupted by a user you don't have access to
-  - if the post is in reply something I'm not involved in and don't care about, I can filter out those posts based on the *re* & *about* tags
-  - a proper reshare can be identified as a post with *about* and rss *link* to the same content
+- the *re* link is a post, so show it as a reply to that post.
+- we can also do the above recursively to show a line of conversation.
+- *about* can be added to show the original reason a line of conversation started in case a line of conservation is interrupted by a user you don't have access to
+- if the post is in reply something I'm not involved in and don't care about, I can filter out those posts based on the *re* & *about* tags
+
+#Other Stuff
+##File size: Paged and Ephemeral
+Feed file sizes should be kept small, so a paging mechanism could be used. Another way to reduce file size is to remove old items that are expired. I prefer the second way because it's a more fun social networking thing.
