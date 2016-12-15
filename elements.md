@@ -4,41 +4,19 @@
 ### description
 ### url
 ### published
+### items-management
 
 ```
-"url":"http://myfeed.net/feeds/1"
+"items-management": {
+    "ephemeral": {
+        "ttl":"2 weeks"
+    }
+}
 ```
+Items can be managed in different ways depending on the items-management setting. See more below.
 
 ## Optional
 ### image
-### paged
-
-
-```
-"paged": {
-    "home":"http://cf.delek.org/feeds/home",
-    "prev":"http://cf.delek.org/feeds/2"
-    "pageSize":20
-}
-```
-
-paged feeds persist all items in multiple feed files. the paging allows loading of only newer content while not having to request a lot of older, already-read content. 
-
-- **prev**: previous feed file in this feed chain if paged
-- **home**: points to the home channel that is the start of this feed chain. 
-it may point to this feed (itself) or be null to signify that *this* is the home channel. A good convention is to have no items in the home channel. 
-
-### ephemeral-ttl
-```
-"ephemeral-ttl":"2 weeks"
-```
-ephemeral feeds are single feeds that delete expired items when updated.
-when an item is created, its ephemeral-expiry will be set to published + ephemeral-ttl. 
-any item whose expiry has passed should be removed next time the feed if modified.
-it is not guaranteed that an algorithm will load older feeds of a paged format to do the delete, so paged feeds are considered *permanent*. 
-it is also not guaranteed that any algorithm will do the delete if no new items are added, since that's the only time a client-only algorithm can make updates to the feed.
-  
-
 ### keys
 
 ```
@@ -126,4 +104,55 @@ an item encrypted using a channel group's symmetric key.
 ```
 "ephemeral-expiry":"2016-08-19 00:00:00"
 ```
-ephemeral items should removed from a feed file on the next modification if the modification datetime > ephemeral-expiry 
+Ephemeral items should removed from a feed file on the next modification if the modification datetime > ephemeral-expiry 
+
+#Item management
+## Ephemeral
+```
+"items-management": {
+    "ephemeral": {
+        "ttl":"2 weeks"
+    }
+}
+```
+Ephemeral feeds are single feeds that delete expired items when updated.
+When an item is created, its ephemeral-expiry will be set to published + ephemeral.ttl. 
+Any item whose expiry has passed should be removed next time the feed is modified.
+
+It is not guaranteed that an algorithm will load older feeds of a paged format to do the delete, so paged feeds are considered *permanent*. 
+It is also not guaranteed that any algorithm will do the delete if no new items are added, since that's the only time a client-only algorithm can make updates to the feed.
+
+This is the recommended default item management scheme.
+
+- **ttl**: Duration an item should be valid before it is available for deletion.
+  
+## Paged
+```
+"items-management": {
+    "paged": {
+        "home":"http://cf.delek.org/feeds/home",
+        "prev":"http://cf.delek.org/feeds/2"
+        "page-size":100
+    }
+}
+```
+Paged feeds persist all items in multiple feed files. 
+The paging allows users to download less data because they are only loading a subset of items.
+Paged feeds allow permanent server-side archiving of items, but make ephemeral management difficult (see above).
+
+- **prev**: previous feed file in this feed chain if paged.
+- **home**: points to the home channel that is the start of this feed chain. 
+it may point to this feed (itself) or be null to signify that *this* is the home channel. A good convention is to have no items in the home channel. 
+- **page-size**: maximum number of items in a feed before starting on a new feed file.
+
+## Rolling
+```
+"items-management": {
+    "rolling": {
+        "page-size":100
+    }
+}
+```
+Rolling feeds are like paged feeds, but only one page can exist at a time.
+Once the page hits its page-size, the oldest item is discarded.
+- **page-size**: maximum number of items in the feed file before discarding old ones.
