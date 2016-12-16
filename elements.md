@@ -3,7 +3,6 @@
 ### name
 ### description
 ### url
-### published
 ### items-management
 
 ```
@@ -50,7 +49,7 @@ link to a keys file full of keys for private encrypted items
 ```
 "url":"http://myfeed.net/feeds/1#1"
 ```
-
+### published
 ## Optional
 ### text
 
