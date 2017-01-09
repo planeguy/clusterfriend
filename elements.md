@@ -16,6 +16,9 @@ Items can be managed in different ways depending on the items-management setting
 
 If no items-management is found, the feed is not valid for editing, but can be viewed.
 
+### items
+array list of items
+
 ## Optional
 ### image
 
@@ -58,21 +61,6 @@ link to a cf item that this is a reply to. by convention, if *about* is omitted,
 ### feels
 
 a token that describes the poster's feeling about the referenced item
-
-### items-management
-settings on an item-by-items basis for items management
-```
-"items-management": {
-    "ephemeral-expiry":"2016-08-19 00:00:00"
-}
-```
-
-#### ephemeral-expiry
-
-```
-"ephemeral-expiry":"2016-08-19 00:00:00"
-```
-Ephemeral items should removed from a feed file on the next modification if the modification datetime > ephemeral-expiry 
 
 # Item management
 ## Ephemeral
