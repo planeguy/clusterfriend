@@ -1,0 +1,12 @@
+{
+  "@context":
+  {
+    "name": "http://schema.org/name",
+    "description": "http://schema.org/about",
+    "items-management":{ "@id":"https://schema.org/additionalType"},
+    "image": {
+      "@id": "http://schema.org/image",
+      "@type": "@id"
+    }
+  }
+}
