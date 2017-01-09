@@ -1,8 +1,8 @@
 # Feed
 ## Required
+### @id
 ### name
 ### description
-### url
 ### items-management
 
 ```
@@ -21,10 +21,10 @@ If no items-management is found, the feed is not valid for editing, but can be v
 
 # Item
 ## Required
-### url
+### @id
 
 ```
-"url":"http://myfeed.net/feeds/1#1"
+"@id":"http://myfeed.net/feeds/1#1"
 ```
 ### published
 ## Optional
