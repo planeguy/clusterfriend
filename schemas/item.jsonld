@@ -18,7 +18,7 @@
       "@type": "@id"
     },
     "re": {
-      "@id": "http://delek.org/schemas/item.json",
+      "@id": "http://delek.org/schemas/item.jsonld",
       "@type": "@id"
     },
     "feels": {

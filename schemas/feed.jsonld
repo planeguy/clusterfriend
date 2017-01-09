@@ -10,7 +10,7 @@
     },
     "items":{
       "@container": "@list",
-      "@id":"http://delek.org/schemas/item.json"
+      "@id":"http://delek.org/schemas/item.jsonld"
     }
   }
 }
