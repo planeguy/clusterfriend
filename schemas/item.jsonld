@@ -18,12 +18,11 @@
       "@type": "@id"
     },
     "re": {
-      "@id": "http://schema.org/url",
+      "@id": "http://delek.org/schemas/item.json",
       "@type": "@id"
     },
     "feels": {
       "@id": "http://schema.org/text"
-    },
-    "items-management":{ "@id":"https://schema.org/additionalType"}
+    }
   }
 }
