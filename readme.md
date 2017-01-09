@@ -35,38 +35,9 @@ In the past, I've compared it to an rss2 feed file and made Clusterfriend an add
 # Private
 Not everyone wants to send things out into the internet publicly or to all their friends. Users should be able to create private groups or feeds to post amongst only authorized friends.
 
-We can add an encryption key to a channel. It's a synchronous key encrypted using a friend's public key. Groups allow us to target different people.
-```json
-[
-    {
-        "fingerprint":"public key fingerprint",
-        "group":"1",
-        "key":"encrypted synchronous key"
-    },
-    {
-        "fingerprint":"public key fingerprint",
-        "group":"1",
-        "key":"encrypted synchronous key"
-    },
-    {
-        "fingerprint":"public key fingerprint",
-        "group":"2",
-        "key":"encrypted synchronous key"
-    }
-]
-    
-```
-
-Items in the channel are then encrypted 
-```json
-{
-    "description":"Encrypted Item",
-    "encrypted": {
-        "group":"2",
-        "content":"stuff"
-    }
-}
-```
+Encryption should be done on a feed-by-feed basis. This allows 2 main ways to secure a feed:
+1. **Server-side security**: you can secure the feed file in any way you wish and that your host supports
+2. **Synchronous key encryption**: you can encrypt a file using a synchronous key, and distribute the synchronous key to your followers via a secure mechanism
 
 # No special server
 If we want to do this without a special server, everything must be able to function using basic http/ftp on basic web hosting. This is mostly possible thanks to RESTful services being written to resemble basic http. For posting, an app may require ftp access and credentials to write files. Any server software API must account for things that basic file http does not usually use, like query parameters. There is one matter of CORS access for webpages accessing the file through AJAX, but we'll cross that bridge when we get to it.
