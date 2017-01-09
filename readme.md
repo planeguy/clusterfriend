@@ -21,11 +21,11 @@ In the past, I've compared it to an rss2 feed file and made Clusterfriend an add
 
 ```json
 {
+    "@id":"http://cf.delek.org/feeds/home",
     "name":"Delek Turner",
-    "id":"http://cf.delek.org/feeds/home",
     "items": [
         {
-            "guid":"http://cf.delek.org/feeds/1/1",
+            "@id":"http://cf.delek.org/feeds/1/1",
             "published":"12 Jul 2016",
             "description":"Hello",
         }
@@ -35,7 +35,9 @@ In the past, I've compared it to an rss2 feed file and made Clusterfriend an add
 # Private
 Not everyone wants to send things out into the internet publicly or to all their friends. Users should be able to create private groups or feeds to post amongst only authorized friends.
 
-Encryption should be done on a feed-by-feed basis. This allows 2 main ways to secure a feed:
+There isn't anything that restricts you to a single feed per user, so we can encrypt on a feed-by-feed basis. Friends can be given permission to the feeds you want them to see.
+
+This gives us 2 main ways to secure a feed:
 1. **Server-side security**: you can secure the feed file in any way you wish and that your host supports
 2. **Synchronous key encryption**: you can encrypt a file using a synchronous key, and distribute the synchronous key to your followers via a secure mechanism
 
@@ -54,8 +56,8 @@ The difference between a basic blog and a social network is the interconnectedne
 - the *re* link is a post, so show it as a reply to that post.
 - we can also do the above recursively to show a line of conversation.
 - *about* can be added to show the original reason a line of conversation started in case a line of conservation is interrupted by a user you don't have access to
-- if the post is in reply something I'm not involved in and don't care about, I can filter out those posts based on the *re* & *about* tags
+- if the post is in reply to something I'm not involved in and don't care about, I can filter out those posts based on the *re* & *about* tags
 
-#Other Stuff
-##File size: Paged and Ephemeral
-Feed file sizes should be kept small, so a paging mechanism could be used. Another way to reduce file size is to remove old items that are expired. I prefer the second way because it's a more fun social networking thing.
+# Other Stuff
+## File size: Paged and Ephemeral
+Feed file sizes should be kept small, so a paging mechanism could be used. Another way to reduce file size is to remove old items that are expired. I prefer the second way because it's a more fun social networking thing. \#opinionated
