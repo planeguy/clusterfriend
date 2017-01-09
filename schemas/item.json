@@ -1,0 +1,29 @@
+{
+  "@context":
+  {
+    "published":{"@id":"http://schema.org/datePublished"},
+    "text":{"@id":"http://schema.org/text"},
+    "enclosure": {
+        "@context":{
+            "url":{
+                "@id":"http://schema.org/url",
+                "@type":"@id"
+            },
+            "type":{"@id":"https://schema.org/encodingType"},
+            "length":{"@id":"https://schema.org/fileSize"}
+        }
+    },
+    "about": {
+      "@id": "http://schema.org/url",
+      "@type": "@id"
+    },
+    "re": {
+      "@id": "http://schema.org/url",
+      "@type": "@id"
+    },
+    "feels": {
+      "@id": "http://schema.org/text"
+    },
+    "items-management":{ "@id":"https://schema.org/additionalType"}
+  }
+}

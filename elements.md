@@ -1,8 +1,8 @@
 # Feed
 ## Required
+### @id
 ### name
 ### description
-### url
 ### items-management
 
 ```
@@ -14,40 +14,17 @@
 ```
 Items can be managed in different ways depending on the items-management setting. See more below.
 
+If no items-management is found, the feed is not valid for editing, but can be viewed.
+
 ## Optional
 ### image
-### keys
-
-```
-"keys":"http://cf.delek.org/keys"
-```
-
-link to a keys file full of keys for private encrypted items
-
-```
-{
-    "fingerprint":{
-        "group":"key",
-        "group":"key",
-        "group":"key"
-    },
-    "fingerprint":{
-        "group":"key",
-        "group":"key",
-        "group":"key"
-    }
-}
-```
-- **fingerprint**: fingerprint of a friend's public key
-- **group**: group id for private groups
-- **key**: encrypted version of a synchronous key for *group*
 
 # Item
 ## Required
-### url
+### @id
 
 ```
-"url":"http://myfeed.net/feeds/1#1"
+"@id":"http://myfeed.net/feeds/1#1"
 ```
 ### published
 ## Optional
@@ -82,30 +59,22 @@ link to a cf item that this is a reply to. by convention, if *about* is omitted,
 
 a token that describes the poster's feeling about the referenced item
 
-### encrypted
-
-an item encrypted using a channel group's symmetric key.
+### items-management
+settings on an item-by-items basis for items management
 ```
-{
-    "url":"http://myfeed.net/feeds/1/6",
-    "encrypted":{
-        "group":"123456789abcdef",
-        "content":"encryptedgobbledygook"
-    }
+"items-management": {
+    "ephemeral-expiry":"2016-08-19 00:00:00"
 }
 ```
 
- - **group**: the group id the item is targeting. friends who have been given a symmetric key for this group will be able to decrypt it.
- - **content**: the encrypted item. the decrypted content of this what this item would look like were it not encrypted.
-
-### ephemeral-expiry
+#### ephemeral-expiry
 
 ```
 "ephemeral-expiry":"2016-08-19 00:00:00"
 ```
 Ephemeral items should removed from a feed file on the next modification if the modification datetime > ephemeral-expiry 
 
-#Item management
+# Item management
 ## Ephemeral
 ```
 "items-management": {
