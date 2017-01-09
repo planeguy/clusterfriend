@@ -42,7 +42,15 @@ This gives us 2 main ways to secure a feed:
 2. **Synchronous key encryption**: you can encrypt a file using a synchronous key, and distribute the synchronous key to your followers via a secure mechanism
 
 # No special server
-If we want to do this without a special server, everything must be able to function using basic http/ftp on basic web hosting. This is mostly possible thanks to RESTful services being written to resemble basic http. For posting, an app may require ftp access and credentials to write files. Any server software API must account for things that basic file http does not usually use, like query parameters. There is one matter of CORS access for webpages accessing the file through AJAX, but we'll cross that bridge when we get to it.
+If we want to do this without a special server, everything must be able to function using basic http/ftp on basic web hosting. This is mostly possible thanks to RESTful services being written to resemble basic file http. This imposes some restrictions:
+
+For reading, we have to account for an API that does not include query paramters, since basic file servers don't do query params.
+
+For posting, a client app may require ftp access and credentials to write files. 
+
+There is one matter of CORS access for webpages accessing the file through AJAX, but we'll cross that bridge when we get to it.
+
+If server software were to be created, it should do very little. I would say it should allow upload of JSON data that would be verified as valid clusterfriend, and then save it to a publically (or whatever) available file.
 
 # Connected
 The difference between a basic blog and a social network is the interconnectedness of posts. We can add this connectedness simply by enabling a link to another item with a relation.
