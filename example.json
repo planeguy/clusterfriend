@@ -1,0 +1,38 @@
+{
+    "@id":"http://cf.delek.org/feeds/home",
+    "name":"Delek Turner",
+    "description":"Delek's Feed",
+    "items-management":{
+        "ephemeral":{
+            "ttl":"P2W"
+        }
+    },
+    "image":"http://cf.delek.org/images/nachos.png",
+    "items": [
+        {
+            "@id":"http://cf.delek.org/feeds/home#2",
+            "published":"2017-01-01T09:00:00Z",
+            "re":"http://cf.pixelante.tumblr.com/#33",
+            "text":"if that were true, i'd have spent my entire adult life in thought-crime prison"
+        },
+        {
+            "@id":"http://cf.delek.org/feeds/home#2",
+            "published":"2017-01-01T09:00:00Z",
+            "about":"http://cbc.ca/news",
+            "text":"it's the news"
+        },
+        {
+            "@id":"http://cf.delek.org/feeds/home#2",
+            "published":"2017-01-01T09:00:00Z",
+            "enclosure":{
+                "url":"http://cf.delek.org/pictures/homer-car.jpg",
+                "type":"image/jpg"
+            }
+        },
+        {
+            "@id":"http://cf.delek.org/feeds/home#1",
+            "published":"2017-01-01T09:00:00Z",
+            "text":"Hello"
+        }
+    ]
+}
