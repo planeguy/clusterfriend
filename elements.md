@@ -21,6 +21,9 @@ array list of items
 
 ## Optional
 ### image
+### pushservice
+
+link to hub service for push update notifications
 
 # Item
 ## Required
