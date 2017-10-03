@@ -7,6 +7,9 @@ So in a rant on the [Rudram Thread](https://www.facebook.com/chris.rudram/posts/
 
 Easier said than done, but in that spirit (the spirit of put my money where my mouth is) I started this project: a decentralized social network. I'm sure someone has thought of this before, <del>I've yet to find it</del> such as the [W3C](http://www.w3.org/Social/WG). There is still a focus on servers and API, which means my webmaster must grant me the privilege of sharing my feed.
 
+# Semi-depricated
+[jsonfeed](https://jsonfeed.org/) is a thing. It has mostly the same stuff that I've worked on + a bunch of stuff I don't agree with but will give it more traction since people like sharing things like bill-gates-will-buy-you-a-hog-chain letters and re-cut news footage with text on it instead of a reporter talking with the word "viral" in the file name. The add-on structure of jsonfeed let's me add emphpemeral and rolling styles of post management without breaking the format, though I disagree with the naming convention for custom add-ons.
+
 # Goals
 1. Distributed
 3. Private
